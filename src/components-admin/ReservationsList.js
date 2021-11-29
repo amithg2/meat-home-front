@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
+
 const styles = {
   reservetions: {
     width: "100%",
@@ -32,6 +33,7 @@ function ReservationsList(props) {
 
   const { classes, reservations } = props;
 
+ 
 
   const showAllReservations = () => {
     const arr = reservations.data;
@@ -46,7 +48,7 @@ function ReservationsList(props) {
       addedDateArray.sort((a, b) => a.date - b.date);
 
       const newArr = addedDateArray.map((e, index) => {
-        return <ReservationOne reservation={e} key={index} id={e.resId} />;
+        return <ReservationOne reservation={e} key={index} id={e.resId.toString()} />;
       });
       if (sortBy === "closer") return newArr;
       else if (sortBy === "far") return newArr.reverse();

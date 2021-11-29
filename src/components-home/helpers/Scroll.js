@@ -3,12 +3,9 @@ import downArrow from "../public/downArrow.png";
 import { withStyles } from "@material-ui/styles";
 import {
   Link,
-  DirectLink,
-  Element,
-  Events,
+
   animateScroll as scroll,
-  scrollSpy,
-  scroller,
+  
 } from "react-scroll";
 
 const styles = {

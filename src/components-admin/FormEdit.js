@@ -5,9 +5,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import axios from 'axios';
 
-function FormEdit({reservation, classes, setIsEdit}) {
+function FormEdit({reservation, classes, setIsEdit, setIsDeleted, setEdited}) {
 
-    const [isDeleted, setIsDeleted] = useState(false);
     const [nameEdit, setNameEdit] = useState(reservation.nameRes);
     const [dateEdit, setDateEdit] = useState(reservation.dateRes);
     const [phoneEdit, setPhoneEdit] = useState(reservation.phoneRes);
@@ -30,10 +29,7 @@ function FormEdit({reservation, classes, setIsEdit}) {
       };
     
       const handleSubmit = async () => {
-        setIsEdit(false);
-        const newDate = new Date(dateEdit);
-        console.log(dateEdit)
-        console.log(newDate.toISOString())
+
         const editedRes = {
           resId: reservation.resId,
           nameRes: nameEdit,
@@ -43,7 +39,9 @@ function FormEdit({reservation, classes, setIsEdit}) {
           isApproved: isApprovedEdit,
           numOfPeopleRes: numOfPeopleEdit,
         };
-        const { data } = await axios.post("/editReservation", editedRes); //what data to send back ?
+        setEdited(editedRes)
+        const { data } = await axios.post("/editReservation", editedRes).then(setIsEdit(false)); //what data to send back ?
+        
       };
     
       const handleDelete = async () => {
