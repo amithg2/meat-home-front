@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
-import TextField from "@mui/material/TextField";
-import axios from "axios";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import FormEdit from "./FormEdit";
+import SmallReservation from "./SmallReservation";
 
 const styles = {
   reservation: {
     width: "85%",
     backgroundColor: "lightgrey",
     padding: "1em",
+    cursor: 'pointer',
     margin: "0.5em 0",
     "& h2": {
       textAlign: "center",
@@ -62,195 +60,61 @@ const styles = {
 function ReservationOne(props) {
   const { reservation, classes } = props;
   const [isEdit, setIsEdit] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [nameEdit, setNameEdit] = useState(reservation.nameRes);
-  const [dateEdit, setDateEdit] = useState(reservation.dateRes);
-  const [phoneEdit, setPhoneEdit] = useState(reservation.phoneRes);
-  const [placeEdit, setPlaceEdit] = useState(reservation.placeRes);
-  const [isApprovedEdit, setIsApprovedEdit] = useState(reservation.isApproved);
-  const [numOfPeopleEdit, setNumOfPeopleEdit] = useState(
-    reservation.numOfPeopleRes
-  );
-//ract hooks ^^
+  const [isMore, setIsMore] = useState(false);
 
-  const handleCancel = () => {
-    setIsEdit(false);
-    setNameEdit(reservation.nameRes);
-    setDateEdit(reservation.dateRes);
-    setPhoneEdit(reservation.phoneRes);
-    setPlaceEdit(reservation.placeRes);
-    setIsApprovedEdit(reservation.isApproved);
-    setNumOfPeopleEdit(reservation.numOfPeopleRes);
-  };
-
-  const handleSubmit = async () => {
-    setIsEdit(false);
-    const newDate = new Date(dateEdit);
-    console.log(dateEdit)
-    console.log(newDate.toISOString())
-    const editedRes = {
-      resId: reservation.resId,
-      nameRes: nameEdit,
-      dateRes: dateEdit,
-      phoneRes: phoneEdit,
-      placeRes: placeEdit,
-      isApproved: isApprovedEdit,
-      numOfPeopleRes: numOfPeopleEdit,
-    };
-    const { data } = await axios.post("/editReservation", editedRes); //what data to send back ?
-  };
-
-  const handleDelete = async () => {
-    setIsEdit(false);
-    const { isDeleted } = await axios.post("/deleteReservation", {
-      resId: reservation.resId,
-    });
-    setIsDeleted(true);
-  };
-  if (!isDeleted) {
-    return (
-      <div className={classes.reservation}>
-        {isEdit ? (
+  if (!isMore) {
+    return <SmallReservation reservation={reservation} setIsMore={setIsMore} isMore={isMore}/>;
+  } else {
+    if (isEdit) {
+      return (
+        <div className={classes.reservation}>
           <div className={classes.edit}>
-            <ValidatorForm
-              className={classes.form}
-              onSubmit={() => "a"}
-              onError={(errors) => console.log(errors)}
-            >
-              <TextValidator
-                sx={{ width: "40%" }}
-                id="name"
-                label="שם"
-                variant="filled"
-                margin="normal"
-                name="name"
-                onChange={(e) => setNameEdit(e.target.value)}
-                value={nameEdit}
-                validators={["required"]}
-                errorMessages={["חובה לכתוב שם"]}
-              />
-
-              <TextField
-                id="date"
-                label="תאריך"
-                margin="normal"
-                type="date"
-                format="dd/MM/yyyy"
-                defaultValue={dateEdit}
-                onChange={(e) => setDateEdit(e.target.value)}
-                sx={{ width: 220 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-
-              <TextValidator
-                sx={{ width: "40%" }}
-                id="phone"
-                label="מספר פלאפון"
-                variant="filled"
-                margin="normal"
-                name="phone"
-                onChange={(e) => setPhoneEdit(e.target.value)}
-                value={phoneEdit}
-                validators={["required"]}
-                errorMessages={["חובה לכתוב מספר פלאפון"]}
-              />
-              <TextValidator
-                sx={{ width: "40%" }}
-                id="place"
-                label="מיקום"
-                variant="filled"
-                margin="normal"
-                name="place"
-                onChange={(e) => setPlaceEdit(e.target.value)}
-                value={placeEdit}
-                validators={["required"]}
-                errorMessages={["חובה לכתוב מיקום"]}
-              />
-
-              <TextValidator
-                sx={{ width: "40%" }}
-                id="numOfPeople"
-                type="number"
-                label="כמות אנשים"
-                variant="filled"
-                margin="normal"
-                name="place"
-                onChange={(e) => setNumOfPeopleEdit(e.target.value)}
-                value={numOfPeopleEdit}
-                validators={["required"]}
-                errorMessages={["חובה לכתוב מיקום"]}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    defaultChecked={isApprovedEdit}
-                    onClick={() => setIsApprovedEdit(!isApprovedEdit)}
-                  />
-                }
-                label={isApprovedEdit ? "אושרה" : "לא אושרה"}
-              />
-            </ValidatorForm>
-            <div className={classes.editButtons}>
-              <button style={{ backgroundColor: "red" }} onClick={handleCancel}>
-                בטל
-              </button>
-              <button
-                style={{ backgroundColor: "green" }}
-                type="submit"
-                onClick={handleSubmit}
-              >
-                שמור
-              </button>
-              <button
-                style={{ backgroundColor: "black" }}
-                onClick={handleDelete}
-              >
-                מחק
-              </button>
-            </div>
+            <FormEdit
+              reservation={reservation}
+              classes={classes}
+              setIsEdit={setIsEdit}
+            />
           </div>
-        ) : (
-          <div className={classes.main}>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.reservation}>
+          <div className={classes.main} onClick={() => setIsMore(!isMore)}>
             <h2> מספר הזמנה: {reservation.resId}</h2>
             <p>
               <b>שם בהזמנה: </b>
-              {nameEdit}
+              {reservation.nameRes}
             </p>
             <p>
               <b> תאריך: </b>
-              {dateEdit}
+              {reservation.dateRes}
             </p>
             <p>
               <b> מספר פלאפון: </b>
-              {phoneEdit}
+              {reservation.phoneRes}
             </p>
             <p>
               <b> מקום :</b>
-              {placeEdit}
+              {reservation.placeRes}
             </p>
             <p>
               <b>כמות מוזמנים: </b>
-              {numOfPeopleEdit}
+              {reservation.numOfPeopleRes}
             </p>
             <p>
-              <b> {isApprovedEdit ? "אושרה" : "לא אושרה"} </b>
+              <b> {reservation.isApproved ? "אושרה" : "לא אושרה"} </b>
             </p>
           </div>
-        )}
-        {!isEdit && (
           <button
             style={{ marginRight: "85%" }}
             onClick={() => setIsEdit(true)}
           >
             ערוך
           </button>
-        )}
-      </div>
-    );
-  } else {
-    return null;
+        </div>
+      );
+    }
   }
 }
 // &#10004; &#10006;
