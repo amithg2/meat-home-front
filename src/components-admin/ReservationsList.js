@@ -11,11 +11,7 @@ const styles = {
   reservetions: {
     width: "100%",
     minHeight: "50vh",
-    "& h1": {
-      padding: "0",
-      margin: "1rem",
-      textAlign: "center",
-    },
+    
   },
   allReservations: {
     width: "100%",
@@ -36,18 +32,13 @@ function ReservationsList(props) {
  
 
   const showAllReservations = () => {
-    const arr = reservations.data;
+    const arr = reservations;
     if (arr) {
-      const addedDateArray = reservations.data.map((e) => {
-        return {
-          ...e,
-          date: new Date(e.dateRes).valueOf(),
-        };
-      });
 
-      addedDateArray.sort((a, b) => a.date - b.date);
+      arr.sort((a, b) => a.date - b.date);
 
-      const newArr = addedDateArray.map((e, index) => {
+      const newArr = arr.map((e, index) => {
+          
         return <ReservationOne reservation={e} key={index} id={e.resId.toString()} />;
       });
       if (sortBy === "closer") return newArr;
@@ -66,10 +57,10 @@ function ReservationsList(props) {
 
   return (
     <div className={classes.reservetions}>
-      <h1>כל ההזמנות</h1>
       <FormControl
         sx={{ width: 120 }}
         onChange={(e) => setSortBy(e.target.value)}
+        margin= 'normal'
       >
         <InputLabel variant="standard" htmlFor="uncontrolled-native">
           מיין לפי

@@ -65,7 +65,7 @@ function ReservationOne(props) {
   const [isMore, setIsMore] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const transitions = ["height", "opacity", "background"];
+
 
   if (!isMore) {
     return (

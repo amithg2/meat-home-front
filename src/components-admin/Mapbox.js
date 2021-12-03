@@ -29,10 +29,8 @@ function Mapbox(props) {
   const { classes, reservations } = props;
 
   const makeMarkers = (arr) => {
-    console.log(arr);
     if (arr) {
       const newArr = arr.map((e, index) => {
-          console.log(e.resId.toString())
         return (
           <Marker
             style={{ cursor: "pointer" }}
@@ -40,7 +38,7 @@ function Mapbox(props) {
             coordinates={e.geometry.coordinates}
             anchor="bottom"
           >
-              <p style={{ fontSize: "1.4em" }}>&#128204;</p>
+              <p style={{ fontSize: "1.4em" }}>&#128205;</p>
             
           </Marker>
         );
@@ -59,7 +57,7 @@ function Mapbox(props) {
         center={[34.9, 31.8]}
         zoom={[8]}
       >
-        {makeMarkers(reservations.data)}
+        {makeMarkers(reservations)}
 
       </Map>
     </div>
