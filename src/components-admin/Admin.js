@@ -4,7 +4,6 @@ import Mapbox from "./Mapbox";
 import ReservationsList from "./ReservationsList";
 import Statistics from "./Statistics";
 import axios from "axios";
-import { Link, animateScroll as scroll } from "react-scroll";
 
 const styles = {
   main: {
@@ -36,7 +35,6 @@ function Admin(props) {
   const [reservationsPast, setReservationsPast] = useState("");
   const [reservationsFuture, setReservationsFuture] = useState("");
   const [curRes, setCurRes] = useState("all");
-
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get("/admin");
@@ -63,17 +61,18 @@ function Admin(props) {
       case "past":
         return (
           <div>
-              <Mapbox reservations={reservationsPast} />
+            <Mapbox reservations={reservationsPast} />
             <ReservationsList reservations={reservationsPast} />
           </div>
         );
       case "future":
         return (
-        <>
-        <Mapbox reservations={reservationsFuture} />
+          <>
+            <Mapbox reservations={reservationsFuture} />
 
-        <ReservationsList reservations={reservationsFuture} />
-        </>)
+            <ReservationsList reservations={reservationsFuture} />
+          </>
+        );
       default:
         return <h1>תקלה מספר 1</h1>;
     }

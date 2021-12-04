@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/styles";
 import FormEdit from "./FormEdit";
 import SmallReservation from "./SmallReservation";
 import Expand from "react-expand-animated"; //see how to use it
+import Button from "@mui/material/Button";
 
 const styles = {
   reservation: {
@@ -18,39 +19,7 @@ const styles = {
       marginRight: "1em",
     },
     "& button": {
-      margin: "0.2em",
-      alignItems: "center",
-      backgroundColor: "#0A66C2",
-      border: "0",
-      borderRadius: "100px",
-      boxSizing: " border-box",
-      color: "#ffffff",
-      cursor: "pointer",
-      display: "inline-flex",
-      fontFamily:
-        '-apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif',
-      fontSize: "16px",
-      fontWeight: "600",
-      justifyContent: "center",
-      lineHeight: "20px",
-      maxWidth: "480px",
-      minHeight: "40px",
-      minWidth: " 0px",
-      overflow: "hidden",
-      padding: "0px",
-      paddingLeft: "20px",
-      paddingRight: "20px",
-      textAlign: "center",
-      touchAtion: "manipulation",
-      transition:
-        "background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s",
-      userSelect: "none",
-      webkitUserSelect: "none",
-      verticalAlign: "middle",
-      "&:hover , &:focus": {
-        backgroundColor: "#16437E",
-        color: "#ffffff",
-      },
+    margin: ' 0 0.3rem '
     },
   },
   editButtons: {
@@ -64,8 +33,6 @@ function ReservationOne(props) {
   const [edited, setEdited] = useState(reservation);
   const [isMore, setIsMore] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
-
-
 
   if (!isMore) {
     return (
@@ -92,44 +59,44 @@ function ReservationOne(props) {
       );
     } else {
       return (
-        
-            <div
-              className={classes.reservation}
-              style={{ display: isDeleted ? "none" : "" }}
-            >
-              <div className={classes.main} onClick={() => setIsMore(!isMore)}>
-                <h2> מספר הזמנה: {reservation.resId}</h2>
-                <p>
-                  <b>שם בהזמנה: </b>
-                  {edited.nameRes}
-                </p>
-                <p>
-                  <b> תאריך: </b>
-                  {edited.dateRes}
-                </p>
-                <p>
-                  <b> מספר פלאפון: </b>
-                  {edited.phoneRes}
-                </p>
-                <p>
-                  <b> מקום :</b>
-                  {edited.placeRes}
-                </p>
-                <p>
-                  <b>כמות מוזמנים: </b>
-                  {edited.numOfPeopleRes}
-                </p>
-                <p>
-                  <b> {edited.isApproved ? "אושרה" : "לא אושרה"} </b>
-                </p>
-              </div>
-              <button
-                style={{ marginRight: "85%" }}
-                onClick={() => setIsEdit(true)}
-              >
-                ערוך
-              </button>
-            </div>
+        <div
+          className={classes.reservation}
+          style={{ display: isDeleted ? "none" : "" }}
+        >
+          <div className={classes.main} onClick={() => setIsMore(!isMore)}>
+            <h2> מספר הזמנה: {reservation.resId}</h2>
+            <p>
+              <b>שם בהזמנה: </b>
+              {edited.nameRes}
+            </p>
+            <p>
+              <b> תאריך: </b>
+              {edited.dateRes}
+            </p>
+            <p>
+              <b> מספר פלאפון: </b>
+              {edited.phoneRes}
+            </p>
+            <p>
+              <b> מקום :</b>
+              {edited.placeRes}
+            </p>
+            <p>
+              <b>כמות מוזמנים: </b>
+              {edited.numOfPeopleRes}
+            </p>
+            <p>
+              <b> {edited.isApproved ? "אושרה" : "לא אושרה"} </b>
+            </p>
+          </div>
+          <Button
+          variant = 'contained' color = 'primary'
+            style={{ marginRight: "85%" }}
+            onClick={() => setIsEdit(true)}
+          >
+            ערוך
+          </Button>
+        </div>
       );
     }
   }

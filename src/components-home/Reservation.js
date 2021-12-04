@@ -155,7 +155,7 @@ function Reservation(props) {
                 onError={(errors) => console.log(errors)}
               >
                 <h2 className={classes.title}>
-                  {resId}
+                
                   להזמנות:
                 </h2>
                 <p>אנא השאירו פרטים ונחזור אליכם בהקדם.</p>
