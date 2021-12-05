@@ -5,7 +5,7 @@ import {
 } from "@material-ui/pickers";
 import axios from "axios";
 // import "date-fns";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/styles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { Button } from "@mui/material";
@@ -45,7 +45,7 @@ const styles = {
       backgroundColor: "rgba(333, 333, 333,0.77)",
       fontSize: "2em",
       padding: "0.3em 2em",
-    }, 
+    },
   },
   mainReservation: {
     height: "100%",
@@ -70,7 +70,7 @@ const styles = {
   },
   phoneNumber: {
     marginTop: "1rem",
-    fontSize: '1rem'
+    fontSize: "1rem",
   },
   bg: {
     height: "100%",
@@ -107,16 +107,32 @@ function Reservation(props) {
   };
 
   //make it shorter with hooks : ^^
-
+  useEffect(() => {
+    ValidatorForm.addValidationRule("isNumber", (value) => {
+    
+        if (isNaN(value)) return false;
+        return true;
+      });
+    ValidatorForm.addValidationRule("isShort", (value) => {
+      if (value.length < 8) return false;
+      return true;
+    });
+    ValidatorForm.addValidationRule("isLong", (value) => {
+      if (value.length > 10) return false;
+      return true;
+    });
+    
+  });
   const submitFormHandler = async () => {
     setIsLoading(true);
     const newRes = {
       nameRes,
-      phoneRes,
+      phoneRes: phoneRes.replace("-", ""),
       placeRes,
       numOfPeopleRes,
       dateRes,
     };
+    console.log(newRes);
     const { data } = await axios.post("/addReservation", newRes); //what data to send back ?
     await setResId(data.resId);
     await setIsLoading(false);
@@ -152,12 +168,9 @@ function Reservation(props) {
               <ValidatorForm
                 className={classes.form}
                 onSubmit={submitFormHandler}
-                onError={(errors) => console.log(errors)}
+                instantValidate={false}
               >
-                <h2 className={classes.title}>
-                
-                  להזמנות:
-                </h2>
+                <h2 className={classes.title}>להזמנות:</h2>
                 <p>אנא השאירו פרטים ונחזור אליכם בהקדם.</p>
                 <TextValidator
                   sx={{ width: "100%" }}
@@ -180,8 +193,14 @@ function Reservation(props) {
                   name="phone"
                   onChange={(e) => setPhoneRes(e.target.value)}
                   value={phoneRes}
-                  validators={["required"]}
-                  errorMessages={["חובה לכתוב מספר פלאפון"]}
+                  validators={["required", "isNumber", "isShort", "isLong"]}
+                  errorMessages={[
+                    "חובה לכתוב מספר פלאפון",
+                    'ניתן לכתוב רק ספרות',
+                    "המספר קצר מידיי",
+                    "המספר ארוך מידיית",
+                    
+                  ]}
                 />
                 <TextValidator
                   sx={{ width: "100%" }}

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import MapMarker from './MapMarker'
+import MapMarker from "./MapMarker";
 import { withStyles } from "@material-ui/styles";
 const styles = {
   mapbox: {
@@ -9,10 +9,13 @@ const styles = {
     width: "100%",
     height: "40vh",
     "& a": {
+      userSelect: "none",
+
       color: "white",
     },
     "& button": {
       display: "none",
+      userSelect: "none",
     },
   },
   map: {
@@ -31,8 +34,14 @@ function Mapbox(props) {
   const makeMarkers = (arr) => {
     if (arr) {
       const newArr = arr.map((e, index) => {
-        return <MapMarker 
-        coordinates = {e.geometry.coordinates} index = {index} key={index} markData = {e}/>;
+        return (
+          <MapMarker
+            coordinates={e.geometry.coordinates}
+            index={index}
+            key={index}
+            markData={e}
+          />
+        );
       });
       return newArr;
     }

@@ -18,6 +18,7 @@ function FormEdit({
   const [dateEdit, setDateEdit] = useState(reservation.dateRes);
   const [phoneEdit, setPhoneEdit] = useState(reservation.phoneRes);
   const [placeEdit, setPlaceEdit] = useState(reservation.placeRes);
+  const [fullAdressEdit, setFullAdressEdit] = useState(reservation.fullAdress);
   const [isApprovedEdit, setIsApprovedEdit] = useState(reservation.isApproved);
   const [isAlert, setIsAlert] = useState("");
   const [message, setMessage] = useState("");
@@ -48,6 +49,7 @@ function FormEdit({
     setPlaceEdit(reservation.placeRes);
     setIsApprovedEdit(reservation.isApproved);
     setNumOfPeopleEdit(reservation.numOfPeopleRes);
+    setFullAdressEdit(reservation.numOfPeopleRes)
     setIsEdit(false);
   };
 
@@ -60,6 +62,7 @@ function FormEdit({
       placeRes: placeEdit,
       isApproved: isApprovedEdit,
       numOfPeopleRes: numOfPeopleEdit,
+      fullAdress: fullAdressEdit
     };
     setEdited(editedRes);
     const { data } = await axios
@@ -130,6 +133,19 @@ function FormEdit({
           validators={["required"]}
           errorMessages={["חובה לכתוב מספר פלאפון"]}
         />
+    
+        <TextValidator
+          sx={{ width: "40%" }}
+          id="fullAdress"
+          label="כתובת מלאה"
+          variant="filled"
+          margin="normal"
+          name="fullAdress"
+          onChange={(e) => setFullAdressEdit(e.target.value)}
+          value={fullAdressEdit}
+          validators={["required"]}
+          errorMessages={["חובה לכתוב מספר פלאפון"]}
+        />
         <TextValidator
           sx={{ width: "40%" }}
           id="place"
@@ -171,11 +187,13 @@ function FormEdit({
           variant="contained"
           color="error"
           onClick={() => alertHandler("delete")}
+          type = 'submit'
         >
           מחק
         </Button>
         <Button
           variant="contained"
+          type = 'submit'
           color="warning"
           onClick={() => alertHandler("cancel")}
         >

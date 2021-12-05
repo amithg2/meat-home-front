@@ -14,6 +14,8 @@ const styles = {
     backgroundColor: "white",
     borderRadius: "10px",
     userSelect: "none",
+    cursor: 'default',
+
     boxShadow:
       "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
     zIndex: "40",
@@ -29,15 +31,35 @@ const styles = {
 
   point: {
     fontSize: "1.4em",
+    margin: "0",
     zIndex: "2",
     padding: "10px",
     userSelect: "none",
+  },
+  buttonMark: {
+    zIndex: "100",
+    color: "black",
+    padding: "0",
+    margin: "0",
+    border: "2px solid black",
+    borderRadius: "3px",
+    margin: "1rem",
+    padding: "0.1rem 0.4rem",
+    fontSize: "1rem",
+    boxShadow: "rgba(100, 100, 111, 0.6) 0px 3px 9px 0px",
+    transition: "0.3s ease",
+    cursor: 'pointer',
+    "&:hover": {
+      backgroundColor: "rgba(0,0,0,0.2)",
+    },
   },
 };
 
 function MapMarker({ index, coordinates, markData, classes }) {
   const { setOpenedRes } = useContext(OpenResContext);
   const [isOpen, setIsOpen] = useState(false);
+  const date = new Date(markData.dateRes)
+  const shownDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
   return (
     <Marker
       style={{ cursor: "pointer" }}
@@ -47,17 +69,12 @@ function MapMarker({ index, coordinates, markData, classes }) {
       anchor="bottom"
     >
       {isOpen ? (
-        <div
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-          className={classes.window}
-        >
+        <div className={classes.window}>
           <div>
             <h3>מספר הזמנה: {markData.resId}</h3>
-            <p>מיקום מדוייק :</p>
+            <p>מיקום מדוייק: {markData.fullAdress || 'לא התווסף'}</p>
             <p>פלאפון : {markData.phoneRes}</p>
-            <p>תאריך: {markData.dateRes}</p>
+            <p>תאריך: {shownDate}</p>
 
             {markData.isAproved ? (
               <b>
@@ -78,21 +95,19 @@ function MapMarker({ index, coordinates, markData, classes }) {
               duration={500}
             >
               <h2
-                style={{
-                  zIndex: "100",
-                  color: "black",
-                  padding: "0",
-                  margin: "0",
-                  border: "2px solid black",
-                  borderRadius: "3px",
-                  margin: "1rem",
-                  padding: "0.5rem",
-                }}
-                onClick={() =>setOpenedRes(markData.resId)}
-              >
-                עוד
-              </h2>
+                className={classes.buttonMark}
+                onClick={() => setOpenedRes(markData.resId)}
+              >עוד</h2>
             </Link>
+            <h2
+            style= {{color: 'red', borderColor: 'red'}}
+              className={classes.buttonMark}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              סגור
+            </h2>
           </div>
         </div>
       ) : (

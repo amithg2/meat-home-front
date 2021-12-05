@@ -39,6 +39,8 @@ function ReservationOne(props) {
   const [isMore, setIsMore] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const date = new Date(reservation.dateRes)
+  const shownDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
 
   if (!isMore) {
     if (openedRes === reservation.resId && !isScrolled ) {
@@ -49,6 +51,7 @@ function ReservationOne(props) {
         reservation={edited}
         setIsMore={setIsMore}
         isMore={isMore}
+        shownDate ={shownDate}
       />
     );
   } else {
@@ -86,7 +89,7 @@ function ReservationOne(props) {
             </p>
             <p>
               <b> תאריך: </b>
-              {edited.dateRes}
+              {shownDate}
             </p>
             <p>
               <b> מספר פלאפון: </b>
@@ -95,6 +98,10 @@ function ReservationOne(props) {
             <p>
               <b> מקום :</b>
               {edited.placeRes}
+            </p>
+            <p>
+              <b>כתובת מלאה :</b>
+              {edited.fullAdress || 'לא התווסף'}
             </p>
             <p>
               <b>כמות מוזמנים: </b>
