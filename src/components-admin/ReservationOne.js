@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { withStyles } from "@material-ui/styles";
 import FormEdit from "./FormEdit";
 import SmallReservation from "./SmallReservation";
 import Expand from "react-expand-animated"; //see how to use it
 import Button from "@mui/material/Button";
+import { OpenResContext } from "./contexts/OpenResContext";
 
 const styles = {
   reservation: {
+    boxShadow:
+      "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+
     width: "85%",
     backgroundColor: "lightgrey",
     padding: "1em",
@@ -19,7 +23,7 @@ const styles = {
       marginRight: "1em",
     },
     "& button": {
-    margin: ' 0 0.3rem '
+      margin: " 0 0.3rem ",
     },
   },
   editButtons: {
@@ -29,12 +33,17 @@ const styles = {
 };
 function ReservationOne(props) {
   const { reservation, classes } = props;
+  const { openedRes } = useContext(OpenResContext);
   const [isEdit, setIsEdit] = useState(false);
   const [edited, setEdited] = useState(reservation);
   const [isMore, setIsMore] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   if (!isMore) {
+    if (openedRes === reservation.resId && !isScrolled ) {
+      setIsMore(true);
+    }
     return (
       <SmallReservation
         reservation={edited}
@@ -63,7 +72,13 @@ function ReservationOne(props) {
           className={classes.reservation}
           style={{ display: isDeleted ? "none" : "" }}
         >
-          <div className={classes.main} onClick={() => setIsMore(!isMore)}>
+          <div
+            className={classes.main}
+            onClick={() => {
+              setIsMore(!isMore);
+              setIsScrolled(true)
+            }}
+          >
             <h2> מספר הזמנה: {reservation.resId}</h2>
             <p>
               <b>שם בהזמנה: </b>
@@ -90,7 +105,8 @@ function ReservationOne(props) {
             </p>
           </div>
           <Button
-          variant = 'contained' color = 'primary'
+            variant="contained"
+            color="primary"
             style={{ marginRight: "85%" }}
             onClick={() => setIsEdit(true)}
           >

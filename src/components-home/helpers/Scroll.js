@@ -1,12 +1,7 @@
 import React from "react";
 import downArrow from "../public/downArrow.png";
 import { withStyles } from "@material-ui/styles";
-import {
-  Link,
-
-  animateScroll as scroll,
-  
-} from "react-scroll";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 const styles = {
   arrowBigDiv: {

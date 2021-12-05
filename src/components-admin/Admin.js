@@ -4,6 +4,7 @@ import Mapbox from "./Mapbox";
 import ReservationsList from "./ReservationsList";
 import Statistics from "./Statistics";
 import axios from "axios";
+import { OpenResContext } from "./contexts/OpenResContext";
 
 const styles = {
   main: {
@@ -35,6 +36,7 @@ function Admin(props) {
   const [reservationsPast, setReservationsPast] = useState("");
   const [reservationsFuture, setReservationsFuture] = useState("");
   const [curRes, setCurRes] = useState("all");
+  const [openedRes, setOpenedRes] = useState('')
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get("/admin");
@@ -109,7 +111,7 @@ function Admin(props) {
         ) : (
           <h2 onClick={() => setCurRes("past")}>הזמנות מהעבר</h2>
         )}
-        {cur == "future" ? (
+        {cur === "future" ? (
           <h2
             style={{
               fontSize: "1.5rem",
@@ -129,10 +131,12 @@ function Admin(props) {
   const { classes } = props;
   return (
     <div className={classes.main}>
-      <div>
-        {showTitles(curRes)}
-        {showChoose(curRes)}
-      </div>
+      <OpenResContext.Provider value ={{openedRes, setOpenedRes}}>
+        <div>
+          {showTitles(curRes)}
+          {showChoose(curRes)}
+        </div>
+      </OpenResContext.Provider>
       <Statistics />
     </div>
   );

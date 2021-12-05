@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { withStyles } from "@material-ui/styles";
 import ReservationOne from "./ReservationOne";
 import axios from "axios";
@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
+import { OpenResContext } from "./contexts/OpenResContext";
 
 const styles = {
   reservetions: {
@@ -25,6 +26,7 @@ const styles = {
 
 function ReservationsList(props) {
   const [sortBy, setSortBy] = useState("closer");
+  
 
   const { classes, reservations } = props;
 
@@ -35,7 +37,11 @@ function ReservationsList(props) {
 
       const newArr = arr.map((e, index) => {
         return (
-          <ReservationOne reservation={e} key={index} id={e.resId.toString()} />
+          <ReservationOne
+            reservation={e}
+            key={index}
+            id={e.resId.toString()}
+          />
         );
       });
       if (sortBy === "closer") return newArr;
@@ -54,7 +60,6 @@ function ReservationsList(props) {
 
   return (
     <div className={classes.reservetions}>
-
       <FormControl
         sx={{ width: 120 }}
         onChange={(e) => setSortBy(e.target.value)}

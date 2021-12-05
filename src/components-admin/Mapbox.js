@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-
+import MapMarker from './MapMarker'
 import { withStyles } from "@material-ui/styles";
 const styles = {
   mapbox: {
@@ -31,17 +31,8 @@ function Mapbox(props) {
   const makeMarkers = (arr) => {
     if (arr) {
       const newArr = arr.map((e, index) => {
-        return (
-          <Marker
-            style={{ cursor: "pointer" }}
-            key={index}
-            coordinates={e.geometry.coordinates}
-            anchor="bottom"
-          >
-              <p style={{ fontSize: "1.4em" }}>&#128205;</p>
-            
-          </Marker>
-        );
+        return <MapMarker 
+        coordinates = {e.geometry.coordinates} index = {index} key={index} markData = {e}/>;
       });
       return newArr;
     }
@@ -58,7 +49,6 @@ function Mapbox(props) {
         zoom={[8]}
       >
         {makeMarkers(reservations)}
-
       </Map>
     </div>
   );
