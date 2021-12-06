@@ -35,15 +35,18 @@ function Admin(props) {
   const [reservations, setReservations] = useState("");
   const [reservationsPast, setReservationsPast] = useState("");
   const [reservationsFuture, setReservationsFuture] = useState("");
+  const [statistics, setStatistics] = useState("");
   const [curRes, setCurRes] = useState("all");
-  const [openedRes, setOpenedRes] = useState('')
+  const [openedRes, setOpenedRes] = useState("");
+
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get("/admin");
+
       const today = await new Date().valueOf();
       const past = data.data.filter((e) => e.date < today);
       const future = data.data.filter((e) => e.date > today);
-
+      setStatistics(data.statistics[0]);
       setReservationsPast(past);
       setReservations(data.data);
       setReservationsFuture(future);
@@ -58,6 +61,7 @@ function Admin(props) {
           <div>
             <Mapbox reservations={reservations} />
             <ReservationsList reservations={reservations} />
+            <Statistics reservations={reservations} />
           </div>
         );
       case "past":
@@ -65,14 +69,15 @@ function Admin(props) {
           <div>
             <Mapbox reservations={reservationsPast} />
             <ReservationsList reservations={reservationsPast} />
+            <Statistics reservations={reservationsPast} />
           </div>
         );
       case "future":
         return (
           <>
             <Mapbox reservations={reservationsFuture} />
-
             <ReservationsList reservations={reservationsFuture} />
+            <Statistics reservations={reservationsFuture} />
           </>
         );
       default:
@@ -131,13 +136,13 @@ function Admin(props) {
   const { classes } = props;
   return (
     <div className={classes.main}>
-      <OpenResContext.Provider value ={{openedRes, setOpenedRes}}>
+      <OpenResContext.Provider value={{ openedRes, setOpenedRes }}>
         <div>
           {showTitles(curRes)}
           {showChoose(curRes)}
         </div>
       </OpenResContext.Provider>
-      <Statistics />
+      
     </div>
   );
 }

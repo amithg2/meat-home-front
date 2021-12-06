@@ -57,7 +57,7 @@ function ReservationOne(props) {
   } else {
     if (isEdit) {
       return (
-        <div className={classes.reservation}>
+        <div className={classes.reservation}  id={reservation.resId.toString()}>
           <div className={classes.edit}>
             <FormEdit
               setIsDeleted={setIsDeleted}
@@ -74,6 +74,7 @@ function ReservationOne(props) {
         <div
           className={classes.reservation}
           style={{ display: isDeleted ? "none" : "" }}
+          id={reservation.resId.toString()}
         >
           <div
             className={classes.main}

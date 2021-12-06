@@ -132,7 +132,6 @@ function Reservation(props) {
       numOfPeopleRes,
       dateRes,
     };
-    console.log(newRes);
     const { data } = await axios.post("/addReservation", newRes); //what data to send back ?
     await setResId(data.resId);
     await setIsLoading(false);
