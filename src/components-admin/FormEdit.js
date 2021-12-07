@@ -66,13 +66,13 @@ function FormEdit({
     };
     setEdited(editedRes);
     const { data } = await axios
-      .post("/editReservation", editedRes)
+      .post("/reservation/edit", editedRes)
       .then(setIsEdit(false)); //what data to send back ?
   };
 
   const handleDelete = async () => {
     setIsEdit(false);
-    const { isDeleted } = await axios.post("/deleteReservation", {
+    const { isDeleted } = await axios.post("/reservation/delete", {
       resId: reservation.resId,
     });
     setIsDeleted(true);
