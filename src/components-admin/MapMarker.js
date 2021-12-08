@@ -4,6 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { withStyles } from "@material-ui/styles";
 import { Link, animateScroll as scroll } from "react-scroll";
 import { OpenResContext } from "./contexts/OpenResContext";
+import useToggle from "../hooks/useToggle";
 
 const styles = {
   window: {
@@ -14,7 +15,7 @@ const styles = {
     backgroundColor: "white",
     borderRadius: "10px",
     userSelect: "none",
-    cursor: 'default',
+    cursor: "default",
 
     boxShadow:
       "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
@@ -48,7 +49,7 @@ const styles = {
     fontSize: "1rem",
     boxShadow: "rgba(100, 100, 111, 0.6) 0px 3px 9px 0px",
     transition: "0.3s ease",
-    cursor: 'pointer',
+    cursor: "pointer",
     "&:hover": {
       backgroundColor: "rgba(0,0,0,0.2)",
     },
@@ -57,9 +58,12 @@ const styles = {
 
 function MapMarker({ index, coordinates, markData, classes }) {
   const { setOpenedRes } = useContext(OpenResContext);
-  const [isOpen, setIsOpen] = useState(false);
-  const date = new Date(markData.dateRes)
-  const shownDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+  const [isOpen, toggleIsOpen] = useToggle(false);
+
+  const date = new Date(markData.dateRes);
+  const shownDate = `${date.getDate()}/${
+    date.getMonth() + 1
+  }/${date.getFullYear()}`;
   return (
     <Marker
       style={{ cursor: "pointer" }}
@@ -72,7 +76,7 @@ function MapMarker({ index, coordinates, markData, classes }) {
         <div className={classes.window}>
           <div>
             <h3>מספר הזמנה: {markData.resId}</h3>
-            <p>מיקום מדוייק: {markData.fullAdress || 'לא התווסף'}</p>
+            <p>מיקום מדוייק: {markData.fullAdress || "לא התווסף"}</p>
             <p>פלאפון : {markData.phoneRes}</p>
             <p>תאריך: {shownDate}</p>
 
@@ -97,13 +101,15 @@ function MapMarker({ index, coordinates, markData, classes }) {
               <h2
                 className={classes.buttonMark}
                 onClick={() => setOpenedRes(markData.resId)}
-              >עוד</h2>
+              >
+                עוד
+              </h2>
             </Link>
             <h2
-            style= {{color: 'red', borderColor: 'red'}}
+              style={{ color: "red", borderColor: "red" }}
               className={classes.buttonMark}
               onClick={() => {
-                setIsOpen(!isOpen);
+                toggleIsOpen();
               }}
             >
               סגור
@@ -113,7 +119,7 @@ function MapMarker({ index, coordinates, markData, classes }) {
       ) : (
         <p
           onClick={() => {
-            setIsOpen(!isOpen);
+            toggleIsOpen();
           }}
           className={classes.point}
         >

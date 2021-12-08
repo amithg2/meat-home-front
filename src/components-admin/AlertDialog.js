@@ -1,4 +1,3 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-
+import useToggle from "../hooks/useToggle";
 export default function AlertDialog({
   message,
   handleCancel,
@@ -16,7 +15,7 @@ export default function AlertDialog({
   handlerCancelDialog,
   type,
 }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, toggleOpen] = useToggle(true);
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -29,12 +28,12 @@ export default function AlertDialog({
     } else if (type === "submit") {
       handleSubmit();
     }
-    setOpen(false);
+    toggleOpen();
   };
 
   const handleClose = () => {
     handlerCancelDialog();
-    setOpen(false);
+    toggleOpen();
   };
 
   return (

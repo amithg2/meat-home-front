@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { withStyles } from "@material-ui/styles";
 import ReservationOne from "./ReservationOne";
-import axios from "axios";
-import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-import { OpenResContext } from "./contexts/OpenResContext";
 
 const styles = {
   reservetions: {

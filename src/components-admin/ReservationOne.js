@@ -5,6 +5,7 @@ import SmallReservation from "./SmallReservation";
 import Expand from "react-expand-animated"; //see how to use it
 import Button from "@mui/material/Button";
 import { OpenResContext } from "./contexts/OpenResContext";
+import useToggle from "../hooks/useToggle";
 
 const styles = {
   reservation: {
@@ -34,36 +35,38 @@ const styles = {
 function ReservationOne(props) {
   const { reservation, classes } = props;
   const { openedRes } = useContext(OpenResContext);
-  const [isEdit, setIsEdit] = useState(false);
   const [edited, setEdited] = useState(reservation);
-  const [isMore, setIsMore] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const date = new Date(reservation.dateRes)
-  const shownDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+  const [isEdit, isEditToggle] = useToggle(false);
+  const [isMore, isMoreToggle] = useToggle(false);
+  const [isDeleted, isDeletedToggle] = useToggle(false);
+  const [isScrolled, isScrollToggle] = useToggle(false);
+  const date = new Date(reservation.dateRes);
+  const shownDate = `${date.getDate()}/${
+    date.getMonth() + 1
+  }/${date.getFullYear()}`;
 
   if (!isMore) {
-    if (openedRes === reservation.resId && !isScrolled ) {
-      setIsMore(true);
+    if (openedRes === reservation.resId && !isScrolled) {
+      isMoreToggle();
     }
     return (
       <SmallReservation
         reservation={edited}
-        setIsMore={setIsMore}
+        setIsMore={isMoreToggle}
         isMore={isMore}
-        shownDate ={shownDate}
+        shownDate={shownDate}
       />
     );
   } else {
     if (isEdit) {
       return (
-        <div className={classes.reservation}  id={reservation.resId.toString()}>
+        <div className={classes.reservation} id={reservation.resId.toString()}>
           <div className={classes.edit}>
             <FormEdit
-              setIsDeleted={setIsDeleted}
+              setIsDeleted={isDeletedToggle}
               reservation={edited}
               classes={classes}
-              setIsEdit={setIsEdit}
+              setIsEdit={isEditToggle}
               setEdited={setEdited}
             />
           </div>
@@ -79,8 +82,8 @@ function ReservationOne(props) {
           <div
             className={classes.main}
             onClick={() => {
-              setIsMore(!isMore);
-              setIsScrolled(true)
+              isMoreToggle();
+              isScrollToggle();
             }}
           >
             <h2> מספר הזמנה: {reservation.resId}</h2>
@@ -94,7 +97,7 @@ function ReservationOne(props) {
             </p>
             <p>
               <b> מספר פלאפון: </b>
-              {edited.phoneRes}
+              {'0' + edited.phoneRes}
             </p>
             <p>
               <b> מקום :</b>
@@ -102,7 +105,7 @@ function ReservationOne(props) {
             </p>
             <p>
               <b>כתובת מלאה :</b>
-              {edited.fullAdress || 'לא התווסף'}
+              {edited.fullAdress || "לא התווסף"}
             </p>
             <p>
               <b>כמות מוזמנים: </b>
@@ -116,7 +119,7 @@ function ReservationOne(props) {
             variant="contained"
             color="primary"
             style={{ marginRight: "85%" }}
-            onClick={() => setIsEdit(true)}
+            onClick={() => isEditToggle()}
           >
             ערוך
           </Button>
@@ -125,5 +128,4 @@ function ReservationOne(props) {
     }
   }
 }
-// &#10004; &#10006;
 export default withStyles(styles)(ReservationOne);
