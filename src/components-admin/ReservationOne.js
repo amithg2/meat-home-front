@@ -64,7 +64,7 @@ function ReservationOne(props) {
           <div className={classes.edit}>
             <FormEdit
               setIsDeleted={isDeletedToggle}
-              reservation={edited}
+              originalReservation={edited}
               classes={classes}
               setIsEdit={isEditToggle}
               setEdited={setEdited}

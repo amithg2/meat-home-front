@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { withStyles } from "@material-ui/styles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { Button } from "@mui/material";
@@ -88,24 +88,17 @@ const styles = {
   },
 };
 
+
 function Reservation(props) {
-  const [nameRes, setNameRes] = useState("");
-  const [phoneRes, setPhoneRes] = useState("");
-  const [placeRes, setPlaceRes] = useState("");
-  const [numOfPeopleRes, setNumOfPeopleRes] = useState("");
-  const [dateRes, setDateRes] = useState("");
   const [resId, setResId] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const handleDateChange = (e) => {
-    setDateRes(e.target.value);
-  };
-
-  //make it shorter with hooks : ^^
+  const [reservation, setReservation] = useState({});
+  
   useEffect(() => {
     ValidatorForm.addValidationRule("isNumber", (value) => {
-        if (isNaN(value)) return false;
-        return true;
-      });
+      if (isNaN(value)) return false;
+      return true;
+    });
     ValidatorForm.addValidationRule("isShort", (value) => {
       if (value.length < 8) return false;
       return true;
@@ -114,18 +107,14 @@ function Reservation(props) {
       if (value.length > 10) return false;
       return true;
     });
-    
   });
   const submitFormHandler = async () => {
     setIsLoading(true);
     const newRes = {
-      nameRes,
-      phoneRes: phoneRes.replace("-", ""),
-      placeRes,
-      numOfPeopleRes,
-      dateRes,
+      ...reservation,
+      phoneRes: reservation.phoneRes.replace("-", ""),
     };
-    const { data } = await axios.post("/reservation/add", newRes); 
+    const { data } = await axios.post("/reservation/add", newRes);
     await setResId(data.resId);
     await setIsLoading(false);
   };
@@ -171,8 +160,8 @@ function Reservation(props) {
                   variant="filled"
                   margin="normal"
                   name="name"
-                  onChange={(e) => setNameRes(e.target.value)}
-                  value={nameRes}
+                  onChange={(e) => setReservation({...reservation, nameRes:e.target.value})}
+                  value={reservation.nameRes}
                   validators={["required"]}
                   errorMessages={["חובה לכתוב שם"]}
                 />
@@ -182,16 +171,16 @@ function Reservation(props) {
                   label="מספר פלאפון"
                   variant="filled"
                   margin="normal"
-                  name="phone"
-                  onChange={(e) => setPhoneRes(e.target.value)}
-                  value={phoneRes}
+                  name="phoneRes"
+                  onChange={(e) => setReservation({...reservation,phoneRes: e.target.value})
+                  }
+                  value={reservation.phoneRes}
                   validators={["required", "isNumber", "isShort", "isLong"]}
                   errorMessages={[
                     "חובה לכתוב מספר פלאפון",
-                    'ניתן לכתוב רק ספרות',
+                    "ניתן לכתוב רק ספרות",
                     "המספר קצר מידיי",
                     "המספר ארוך מידיית",
-                    
                   ]}
                 />
                 <TextValidator
@@ -202,25 +191,25 @@ function Reservation(props) {
                   variant="filled"
                   margin="normal"
                   name="place"
-                  onChange={(e) => setPlaceRes(e.target.value)}
-                  value={placeRes}
+                  onChange={(e) => setReservation({...reservation,placeRes: e.target.value})}
+                  value={reservation.placeRes}
                   validators={["required"]}
                   errorMessages={["חובה לכתוב מיקום"]}
                 />
                 <div className={classes.smallForm}>
-
                   <TextField
                     id="date"
                     label="תאריך"
                     margin="normal"
                     type="date"
                     format="dd/MM/yyyy"
-                    defaultValue={dateRes}
-                    onChange={handleDateChange}
-                    sx={{ width: 220 }}
+                    defaultValue={reservation.dateRes}
+                    onChange={(e)=> setReservation({...reservation,dateRes: e.target.value})}
+                    sx={{ width: 220 }}     
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    required
                   />
 
                   <FormControl
@@ -233,9 +222,9 @@ function Reservation(props) {
                       sx={{ width: "100%" }}
                       labelId="numOfPeopleRes"
                       id="numOfPeopleRes"
-                      value={numOfPeopleRes}
+                      value={reservation.numOfPeopleRes}
                       onChange={(e) => {
-                        setNumOfPeopleRes(e.target.value);
+                        setReservation({...reservation,numOfPeopleRes: e.target.value});
                       }}
                       label="Age"
                     >

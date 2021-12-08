@@ -8,25 +8,16 @@ import AlertDialog from "./AlertDialog";
 import Button from "@mui/material/Button";
 
 function FormEdit({
-  reservation,
+  originalReservation,
   classes,
   setIsEdit,
   setIsDeleted,
   setEdited,
 }) {
-  const [nameEdit, setNameEdit] = useState(reservation.nameRes);
-  const [dateEdit, setDateEdit] = useState(reservation.dateRes);
-  const [phoneEdit, setPhoneEdit] = useState(reservation.phoneRes);
-  const [placeEdit, setPlaceEdit] = useState(reservation.placeRes);
-  const [fullAdressEdit, setFullAdressEdit] = useState(reservation.fullAdress);
-  const [isApprovedEdit, setIsApprovedEdit] = useState(reservation.isApproved);
+  const [reservation, setReservation] = useState(originalReservation);
   const [isAlert, setIsAlert] = useState("");
   const [message, setMessage] = useState("");
-  const [numOfPeopleEdit, setNumOfPeopleEdit] = useState(
-    reservation.numOfPeopleRes
-  );
 
-  //ract hooks ^^
   const handlerCancelDialog = () => {
     setIsAlert("");
     setMessage("");
@@ -43,31 +34,15 @@ function FormEdit({
   };
 
   const handleCancel = () => {
-    setNameEdit(reservation.nameRes);
-    setDateEdit(reservation.dateRes);
-    setPhoneEdit(reservation.phoneRes);
-    setPlaceEdit(reservation.placeRes);
-    setIsApprovedEdit(reservation.isApproved);
-    setNumOfPeopleEdit(reservation.numOfPeopleRes);
-    setFullAdressEdit(reservation.numOfPeopleRes)
+    setReservation(originalReservation)
     setIsEdit(false);
   };
 
   const handleSubmit = async () => {
-    const editedRes = {
-      resId: reservation.resId,
-      nameRes: nameEdit,
-      dateRes: dateEdit,
-      phoneRes: phoneEdit,
-      placeRes: placeEdit,
-      isApproved: isApprovedEdit,
-      numOfPeopleRes: numOfPeopleEdit,
-      fullAdress: fullAdressEdit
-    };
-    setEdited(editedRes);
+    setEdited(reservation);
     const { data } = await axios
-      .post("/reservation/edit", editedRes)
-      .then(setIsEdit(false)); //what data to send back ?
+      .post("/reservation/edit", reservation)
+      .then(setIsEdit(false)).catch(err =>  err)
   };
 
   const handleDelete = async () => {
@@ -101,8 +76,8 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="name"
-          onChange={(e) => setNameEdit(e.target.value)}
-          value={nameEdit}
+          onChange={(e) => setReservation({...reservation,nameRes: e.target.value })}
+          value={reservation.nameRes}
           validators={["required"]}
           errorMessages={["חובה לכתוב שם"]}
         />
@@ -113,8 +88,8 @@ function FormEdit({
           margin="normal"
           type="date"
           format="dd/MM/yyyy"
-          defaultValue={dateEdit}
-          onChange={(e) => setDateEdit(e.target.value)}
+          defaultValue={reservation.dateRes}
+          onChange={(e) => setReservation({ ...reservation,dateRes: e.target.value })}
           sx={{ width: 220 }}
           InputLabelProps={{
             shrink: true,
@@ -128,12 +103,12 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="phone"
-          onChange={(e) => setPhoneEdit(e.target.value)}
-          value={phoneEdit}
+          onChange={(e) => setReservation({ ...reservation,phoneRes: e.target.value })}
+          value={reservation.phoneRes}
           validators={["required"]}
           errorMessages={["חובה לכתוב מספר פלאפון"]}
         />
-    
+
         <TextValidator
           sx={{ width: "40%" }}
           id="fullAdress"
@@ -141,10 +116,8 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="fullAdress"
-          onChange={(e) => setFullAdressEdit(e.target.value)}
-          value={fullAdressEdit}
-          validators={["required"]}
-          errorMessages={["חובה לכתוב מספר פלאפון"]}
+          onChange={(e) => setReservation({...reservation,fullAdress: e.target.value})}
+          value={reservation.fullAdress}
         />
         <TextValidator
           sx={{ width: "40%" }}
@@ -153,8 +126,8 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="place"
-          onChange={(e) => setPlaceEdit(e.target.value)}
-          value={placeEdit}
+          onChange={(e) => setReservation({...reservation,placeRes : e.target.value})}
+          value={reservation.placeRes}
           validators={["required"]}
           errorMessages={["חובה לכתוב מיקום"]}
         />
@@ -167,19 +140,19 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="place"
-          onChange={(e) => setNumOfPeopleEdit(e.target.value)}
-          value={numOfPeopleEdit}
+          onChange={(e) => setReservation({...reservation,numOfPeopleRes: e.target.value})}
+          value={reservation.numOfPeopleRes}
           validators={["required"]}
-          errorMessages={["חובה לכתוב מיקום"]}
+          errorMessages={["חובה לכתוב מספר אנשים"]}
         />
         <FormControlLabel
           control={
             <Checkbox
-              defaultChecked={isApprovedEdit}
-              onClick={() => setIsApprovedEdit(!isApprovedEdit)}
+              defaultChecked={reservation.isApproved}
+              onClick={() => setReservation({...reservation,isApproved: !reservation.isApprovedEdit})}
             />
           }
-          label={isApprovedEdit ? "אושרה" : "לא אושרה"}
+          label={reservation.isApproved ? "אושרה" : "לא אושרה"}
         />
       </ValidatorForm>
       <div className={classes.editButtons}>
@@ -187,13 +160,13 @@ function FormEdit({
           variant="contained"
           color="error"
           onClick={() => alertHandler("delete")}
-          type = 'submit'
+          type="submit"
         >
           מחק
         </Button>
         <Button
           variant="contained"
-          type = 'submit'
+          type="submit"
           color="warning"
           onClick={() => alertHandler("cancel")}
         >
