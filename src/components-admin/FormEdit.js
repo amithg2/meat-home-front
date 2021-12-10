@@ -34,22 +34,35 @@ function FormEdit({
   };
 
   const handleCancel = () => {
-    setReservation(originalReservation)
+    setReservation(originalReservation);
     setIsEdit(false);
   };
 
   const handleSubmit = async () => {
     setEdited(reservation);
     const { data } = await axios
-      .post("/reservation/edit", reservation)
-      .then(setIsEdit(false)).catch(err =>  err)
+      .post("/reservation/edit", reservation, {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then(setIsEdit(false))
+      .catch((err) => err);
   };
 
   const handleDelete = async () => {
     setIsEdit(false);
-    const { isDeleted } = await axios.post("/reservation/delete", {
-      resId: reservation.resId,
-    });
+    const { isDeleted } = await axios.post(
+      "/reservation/delete",
+      {
+        resId: reservation.resId,
+      },
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    );
     setIsDeleted(true);
   };
   return (
@@ -76,7 +89,9 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="name"
-          onChange={(e) => setReservation({...reservation,nameRes: e.target.value })}
+          onChange={(e) =>
+            setReservation({ ...reservation, nameRes: e.target.value })
+          }
           value={reservation.nameRes}
           validators={["required"]}
           errorMessages={["חובה לכתוב שם"]}
@@ -89,7 +104,9 @@ function FormEdit({
           type="date"
           format="dd/MM/yyyy"
           defaultValue={reservation.dateRes}
-          onChange={(e) => setReservation({ ...reservation,dateRes: e.target.value })}
+          onChange={(e) =>
+            setReservation({ ...reservation, dateRes: e.target.value })
+          }
           sx={{ width: 220 }}
           InputLabelProps={{
             shrink: true,
@@ -103,7 +120,9 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="phone"
-          onChange={(e) => setReservation({ ...reservation,phoneRes: e.target.value })}
+          onChange={(e) =>
+            setReservation({ ...reservation, phoneRes: e.target.value })
+          }
           value={reservation.phoneRes}
           validators={["required"]}
           errorMessages={["חובה לכתוב מספר פלאפון"]}
@@ -116,7 +135,9 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="fullAdress"
-          onChange={(e) => setReservation({...reservation,fullAdress: e.target.value})}
+          onChange={(e) =>
+            setReservation({ ...reservation, fullAdress: e.target.value })
+          }
           value={reservation.fullAdress}
         />
         <TextValidator
@@ -126,7 +147,9 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="place"
-          onChange={(e) => setReservation({...reservation,placeRes : e.target.value})}
+          onChange={(e) =>
+            setReservation({ ...reservation, placeRes: e.target.value })
+          }
           value={reservation.placeRes}
           validators={["required"]}
           errorMessages={["חובה לכתוב מיקום"]}
@@ -140,7 +163,9 @@ function FormEdit({
           variant="filled"
           margin="normal"
           name="place"
-          onChange={(e) => setReservation({...reservation,numOfPeopleRes: e.target.value})}
+          onChange={(e) =>
+            setReservation({ ...reservation, numOfPeopleRes: e.target.value })
+          }
           value={reservation.numOfPeopleRes}
           validators={["required"]}
           errorMessages={["חובה לכתוב מספר אנשים"]}
@@ -149,7 +174,12 @@ function FormEdit({
           control={
             <Checkbox
               defaultChecked={reservation.isApproved}
-              onClick={() => setReservation({...reservation,isApproved: !reservation.isApprovedEdit})}
+              onClick={() =>
+                setReservation({
+                  ...reservation,
+                  isApproved: !reservation.isApprovedEdit,
+                })
+              }
             />
           }
           label={reservation.isApproved ? "אושרה" : "לא אושרה"}

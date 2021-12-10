@@ -21,15 +21,19 @@ const styles = {
   },
 };
 
-
 function Statistics({ classes, reservations }) {
   const [enters, setEnters] = useState("");
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get("/admin");
-
-      setEnters(data.statistics[0].enters);
+      const { data } = await axios.get("/admin", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      });
+      if (data.statistics) {
+        setEnters(data.statistics[0].enters);
+      }
     };
     getData();
   }, []);
