@@ -6,6 +6,7 @@ import ReservationsList from "./ReservationsList";
 import Statistics from "./Statistics";
 import axios from "axios";
 import { OpenResContext } from "./contexts/OpenResContext";
+import sizes from "../styles/sizes";
 
 const styles = {
   main: {
@@ -18,17 +19,25 @@ const styles = {
       justifyContent: "center",
       textAlign: "center",
     },
+    [sizes.down("md")]: {
+      width: "100%",
+    },
   },
   titles: {
+    fontSize: "0.7rem",
     display: "flex",
     width: "100%",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
+    height:'4rem',
     "& h2": {
-      color: "gray",
       cursor: "pointer",
-      fontSize: "1.45rem",
       transition: "0.5s ease",
     },
+  },
+  curTitle: {
+    fontSize: "1.1rem",
+    color: "black",
+    textDecoration: "underline",
   },
 };
 
@@ -45,8 +54,8 @@ function Admin(props) {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
-      })
-      
+      });
+
       setIsAuth(data.isAuth);
       if (data.isAuth) {
         const today = await new Date().valueOf();
@@ -91,69 +100,41 @@ function Admin(props) {
     }
   };
 
-  const showTitles = (cur) => {
-    return (
-      <div className={classes.titles}>
-        {cur === "all" ? (
-          <h2
-            style={{
-              fontSize: "1.5rem",
-              color: "black",
-              textDecoration: "underline",
-            }}
-            onClick={() => setCurRes("all")}
-          >
-            כל ההזמנות
-          </h2>
-        ) : (
-          <h2 onClick={() => setCurRes("all")}>כל ההזמנות</h2>
-        )}
-        {cur === "past" ? (
-          <h2
-            style={{
-              fontSize: "1.5rem",
-              color: "black",
-              textDecoration: "underline",
-            }}
-            onClick={() => setCurRes("past")}
-          >
-            הזמנות מהעבר
-          </h2>
-        ) : (
-          <h2 onClick={() => setCurRes("past")}>הזמנות מהעבר</h2>
-        )}
-        {cur === "future" ? (
-          <h2
-            style={{
-              fontSize: "1.5rem",
-              color: "black",
-              textDecoration: "underline",
-            }}
-            onClick={() => setCurRes("future")}
-          >
-            הזמנות
-          </h2>
-        ) : (
-          <h2 onClick={() => setCurRes("future")}>הזמנות</h2>
-        )}
-      </div>
-    );
-  };
+
   const { classes } = props;
   if (isAuth) {
     return (
       <div className={classes.main}>
         <OpenResContext.Provider value={{ openedRes, setOpenedRes }}>
           <div>
-            {showTitles(curRes)}
+            <div className={classes.titles}>
+              <h2
+                className={`${curRes === "all" && classes.curTitle}`}
+                onClick={() => setCurRes("all")}
+              >
+                כל ההזמנות
+              </h2>
+              <h2
+                className={`${curRes === "past" && classes.curTitle}`}
+                onClick={() => setCurRes("past")}
+              >
+                הזמנות מהעבר
+              </h2>
+
+              <h2
+                className={`${curRes === "future" && classes.curTitle}`}
+                onClick={() => setCurRes("future")}
+              >
+                הזמנות 
+              </h2>
+            </div>
             {showChoose(curRes)}
           </div>
         </OpenResContext.Provider>
       </div>
     );
   }
-    return <Navigate to="/" />;
-    
+  return <Navigate to="/" />;
 }
 
 export default withStyles(styles)(Admin);

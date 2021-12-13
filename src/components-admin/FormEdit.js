@@ -6,6 +6,17 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 import AlertDialog from "./AlertDialog";
 import Button from "@mui/material/Button";
+import { withStyles } from "@material-ui/styles";
+import sizes from "../styles/sizes";
+
+const styles = {
+  form: {
+      width: '40%',
+    [sizes.down("md")]: {
+        width: "100%",
+      },
+  },
+};
 
 function FormEdit({
   originalReservation,
@@ -77,115 +88,113 @@ function FormEdit({
           type={isAlert}
         />
       )}
+      <div className={classes.form}>
+        <ValidatorForm onError={(errors) => console.log(errors)}>
+          <TextValidator
+            sx={{ width: "100%" }}
+            id="name"
+            label="שם"
+            variant="filled"
+            margin="normal"
+            name="name"
+            onChange={(e) =>
+              setReservation({ ...reservation, nameRes: e.target.value })
+            }
+            value={reservation.nameRes}
+            validators={["required"]}
+            errorMessages={["חובה לכתוב שם"]}
+          />
 
-      <ValidatorForm
-        className={classes.form}
-        onError={(errors) => console.log(errors)}
-      >
-        <TextValidator
-          sx={{ width: "40%" }}
-          id="name"
-          label="שם"
-          variant="filled"
-          margin="normal"
-          name="name"
-          onChange={(e) =>
-            setReservation({ ...reservation, nameRes: e.target.value })
-          }
-          value={reservation.nameRes}
-          validators={["required"]}
-          errorMessages={["חובה לכתוב שם"]}
-        />
+          <TextField
+            id="date"
+            label="תאריך"
+            margin="normal"
+            type="date"
+            format="dd/MM/yyyy"
+            defaultValue={reservation.dateRes}
+            onChange={(e) =>
+              setReservation({ ...reservation, dateRes: e.target.value })
+            }
+            sx={{ width: 220 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
 
-        <TextField
-          id="date"
-          label="תאריך"
-          margin="normal"
-          type="date"
-          format="dd/MM/yyyy"
-          defaultValue={reservation.dateRes}
-          onChange={(e) =>
-            setReservation({ ...reservation, dateRes: e.target.value })
-          }
-          sx={{ width: 220 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
+          <TextValidator
+            sx={{ width: "100%" }}
+            id="phone"
+            label="מספר פלאפון"
+            variant="filled"
+            margin="normal"
+            name="phone"
+            onChange={(e) =>
+              setReservation({ ...reservation, phoneRes: e.target.value })
+            }
+            value={reservation.phoneRes}
+            validators={["required"]}
+            errorMessages={["חובה לכתוב מספר פלאפון"]}
+          />
 
-        <TextValidator
-          sx={{ width: "40%" }}
-          id="phone"
-          label="מספר פלאפון"
-          variant="filled"
-          margin="normal"
-          name="phone"
-          onChange={(e) =>
-            setReservation({ ...reservation, phoneRes: e.target.value })
-          }
-          value={reservation.phoneRes}
-          validators={["required"]}
-          errorMessages={["חובה לכתוב מספר פלאפון"]}
-        />
+          <TextValidator
+            sx={{ width: "100%" }}
+            id="fullAdress"
+            label="כתובת מלאה"
+            variant="filled"
+            margin="normal"
+            name="fullAdress"
+            onChange={(e) =>
+              setReservation({ ...reservation, fullAdress: e.target.value })
+            }
+            value={reservation.fullAdress}
+          />
+          <TextValidator
+            sx={{ width: "100%" }}
+            id="place"
+            label="מיקום"
+            variant="filled"
+            margin="normal"
+            name="place"
+            onChange={(e) =>
+              setReservation({ ...reservation, placeRes: e.target.value })
+            }
+            value={reservation.placeRes}
+            validators={["required"]}
+            errorMessages={["חובה לכתוב מיקום"]}
+          />
 
-        <TextValidator
-          sx={{ width: "40%" }}
-          id="fullAdress"
-          label="כתובת מלאה"
-          variant="filled"
-          margin="normal"
-          name="fullAdress"
-          onChange={(e) =>
-            setReservation({ ...reservation, fullAdress: e.target.value })
-          }
-          value={reservation.fullAdress}
-        />
-        <TextValidator
-          sx={{ width: "40%" }}
-          id="place"
-          label="מיקום"
-          variant="filled"
-          margin="normal"
-          name="place"
-          onChange={(e) =>
-            setReservation({ ...reservation, placeRes: e.target.value })
-          }
-          value={reservation.placeRes}
-          validators={["required"]}
-          errorMessages={["חובה לכתוב מיקום"]}
-        />
-
-        <TextValidator
-          sx={{ width: "40%" }}
-          id="numOfPeople"
-          type="number"
-          label="כמות אנשים"
-          variant="filled"
-          margin="normal"
-          name="place"
-          onChange={(e) =>
-            setReservation({ ...reservation, numOfPeopleRes: e.target.value })
-          }
-          value={reservation.numOfPeopleRes}
-          validators={["required"]}
-          errorMessages={["חובה לכתוב מספר אנשים"]}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              defaultChecked={reservation.isApproved}
-              onClick={() =>
-                setReservation({
-                  ...reservation,
-                  isApproved: !reservation.isApprovedEdit,
-                })
-              }
-            />
-          }
-          label={reservation.isApproved ? "אושרה" : "לא אושרה"}
-        />
-      </ValidatorForm>
-      <div className={classes.editButtons}>
+          <TextValidator
+            sx={{ width: "100%" }}
+            id="numOfPeople"
+            type="number"
+            label="כמות אנשים"
+            variant="filled"
+            margin="normal"
+            name="place"
+            onChange={(e) =>
+              setReservation({ ...reservation, numOfPeopleRes: e.target.value })
+            }
+            value={reservation.numOfPeopleRes}
+            validators={["required"]}
+            errorMessages={["חובה לכתוב מספר אנשים"]}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                defaultChecked={reservation.isApproved}
+                onClick={() =>
+                  setReservation({
+                    ...reservation,
+                    isApproved: !reservation.isApprovedEdit,
+                  })
+                }
+              />
+            }
+            label={reservation.isApproved ? "אושרה" : "לא אושרה"}
+          />
+        </ValidatorForm>
+      </div>
+      <div dir="ltr">
         <Button
           variant="contained"
           color="error"
@@ -215,4 +224,4 @@ function FormEdit({
   );
 }
 
-export default FormEdit;
+export default withStyles(styles)(FormEdit);

@@ -8,12 +8,15 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
+import sizes from "../styles/sizes";
 
 const styles = {
   title: {
     marginTop: "0",
     padding: "0",
     fontSize: "3em",
+    margin : '0',
+    
   },
   Reservation: {
     padding: "0",
@@ -61,6 +64,10 @@ const styles = {
     padding: "2em",
     boxShadow:
       "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
+    [sizes.down("sm")]: {
+      width: "100%",
+      padding: '1em'
+    },
   },
   phoneNumber: {
     marginTop: "1rem",
@@ -88,12 +95,11 @@ const styles = {
   },
 };
 
-
 function Reservation(props) {
   const [resId, setResId] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [reservation, setReservation] = useState({});
-  
+
   useEffect(() => {
     ValidatorForm.addValidationRule("isNumber", (value) => {
       if (isNaN(value)) return false;
@@ -160,7 +166,9 @@ function Reservation(props) {
                   variant="filled"
                   margin="normal"
                   name="name"
-                  onChange={(e) => setReservation({...reservation, nameRes:e.target.value})}
+                  onChange={(e) =>
+                    setReservation({ ...reservation, nameRes: e.target.value })
+                  }
                   value={reservation.nameRes}
                   validators={["required"]}
                   errorMessages={["חובה לכתוב שם"]}
@@ -172,7 +180,8 @@ function Reservation(props) {
                   variant="filled"
                   margin="normal"
                   name="phoneRes"
-                  onChange={(e) => setReservation({...reservation,phoneRes: e.target.value})
+                  onChange={(e) =>
+                    setReservation({ ...reservation, phoneRes: e.target.value })
                   }
                   value={reservation.phoneRes}
                   validators={["required", "isNumber", "isShort", "isLong"]}
@@ -191,7 +200,9 @@ function Reservation(props) {
                   variant="filled"
                   margin="normal"
                   name="place"
-                  onChange={(e) => setReservation({...reservation,placeRes: e.target.value})}
+                  onChange={(e) =>
+                    setReservation({ ...reservation, placeRes: e.target.value })
+                  }
                   value={reservation.placeRes}
                   validators={["required"]}
                   errorMessages={["חובה לכתוב מיקום"]}
@@ -204,8 +215,13 @@ function Reservation(props) {
                     type="date"
                     format="dd/MM/yyyy"
                     defaultValue={reservation.dateRes}
-                    onChange={(e)=> setReservation({...reservation,dateRes: e.target.value})}
-                    sx={{ width: 220 }}     
+                    onChange={(e) =>
+                      setReservation({
+                        ...reservation,
+                        dateRes: e.target.value,
+                      })
+                    }
+                    sx={{ width: 220 }}
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -224,7 +240,10 @@ function Reservation(props) {
                       id="numOfPeopleRes"
                       value={reservation.numOfPeopleRes}
                       onChange={(e) => {
-                        setReservation({...reservation,numOfPeopleRes: e.target.value});
+                        setReservation({
+                          ...reservation,
+                          numOfPeopleRes: e.target.value,
+                        });
                       }}
                       label="Age"
                     >

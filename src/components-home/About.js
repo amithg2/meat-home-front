@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/styles";
 import Scroll from "./helpers/Scroll";
+import sizes from "../styles/sizes";
 
 const styles = {
   about: {
@@ -28,9 +29,28 @@ const styles = {
       padding: "0 1em",
       filter: "drop-shadow(2px 3px 9px rgba(255,255,255,0.99))",
       fontFamily: "Assistant, sans-serif",
+      [sizes.down("lg")]: {
+        fontSize: "6vw",
+      },
+      [sizes.down("sm")]: {
+        fontSize: "11vw",
+        padding: "0",
+      },
     },
   },
-  event: {},
+  scrollToBig : {
+    display: 'block',
+    [sizes.down("sm")]: {
+        display: 'none'
+      },
+  },
+  scrollToSmall : {
+    display: 'none',
+    [sizes.down("sm")]: {
+        display: 'block'
+      },
+  },
+
 };
 
 function About(props) {
@@ -43,7 +63,12 @@ function About(props) {
         <h3>בכל הארץ</h3>
       </div>
       <div>
-        <Scroll scrollTo={'2'} />
+        <div className={classes.scrollToBig}>
+          <Scroll scrollTo={"2"} />
+        </div>
+        <div className={classes.scrollToSmall}>
+          <Scroll scrollTo={"2s"} />
+        </div>
       </div>
     </div>
   );

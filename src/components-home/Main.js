@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/styles";
 import Scroll from "./helpers/Scroll";
+import sizes from "../styles/sizes";
 
 const styles = {
   container: {
@@ -19,7 +20,10 @@ const styles = {
     justifyContent: "center",
   },
   name: {
-      zIndex: '14',
+    [sizes.down("md")]: {
+      fontSize: "15vw",
+    },
+    zIndex: "14",
     fontSize: "10vw",
     fontFamily: "Roboto, sans-serif",
     textDecoration: "none",
@@ -30,8 +34,8 @@ const styles = {
     backgroundSize: "auto .1rem",
     backgroundPosition: "bottom",
     transition: " all ease-in-out .5s",
-    position: 'absolute',
-    filter : 'drop-shadow(9px 19px 9px rgba(255,255,255,0.48))',
+    position: "absolute",
+    filter: "drop-shadow(9px 19px 9px rgba(255,255,255,0.48))",
 
     "& span": {
       color: "#E71A1A",
@@ -41,7 +45,7 @@ const styles = {
       backgroundSize: "auto .14rem",
       userSelect: "none",
       color: "#E71A1A",
-      filter : 'drop-shadow(9px 19px 26px rgba(255,255,255,0.78))',
+      filter: "drop-shadow(9px 19px 26px rgba(255,255,255,0.78))",
 
       backgroundImage:
         "linear-gradient(90deg, rgba(249,14,14,0.03125) 2%, rgba(249,14,14,0.3085609243697479) 16%, rgba(249,14,14,0.9051995798319328) 21%, rgba(0,0,0,1) 29%, rgba(246,15,15,1) 37%, rgba(246,15,15,0.26934523809523814) 52%, rgba(246,15,15,0) 65%)",
@@ -50,7 +54,6 @@ const styles = {
       },
     },
   },
-  
 };
 
 const Main = ({ classes }) => {
@@ -60,7 +63,7 @@ const Main = ({ classes }) => {
         <h1 className={classes.name}>
           Me<span>at</span> Home
         </h1>
-       <Scroll scrollTo={'1'}/>
+        <Scroll scrollTo={"1"} />
       </div>
     </div>
   );

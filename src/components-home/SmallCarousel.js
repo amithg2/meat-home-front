@@ -18,64 +18,45 @@ const styles = (theme) => ({
       width: "100%",
       height: "100%",
       objectFit: "cover",
-      outline: '4px solid #fff',
-      outlineOffset: '-4px',
+      outline: "2px solid #fff",
+      outlineOffset: "-2px",
     },
   },
   mainLeft: {
-    width: "45%",
+    width: "50%",
     height: "100%",
+    backgroundColor: "red",
   },
-  mainRight: {
-    width: "55%",
+  half: {
+    width: "50%",
     height: "100%",
     display: "flex",
+    backgroundColor: "green",
+    flexDirection: "column",
   },
-  leftBigImg: {
+
+  one: {
     height: "50%",
     width: "100%",
+    backgroundColor: "purple",
     "& div": {
       objectFit: "cover",
       width: "100%",
       height: "100%",
     },
   },
-  leftSmallImg: {
+
+  two: {
     height: "50%",
     width: "100%",
-    display: "flex",
-  },
-  leftSmallImg1: {
-    minHeight: "100%",
-    width: "50%",
-  },
-  leftSmallImg2: {
-    height: "100%",
-    width: "50%",
-  },
-
-  rightRight: {
-    width: "50%",
-    height: "100%",
-  },
-  rightLeft: {
-    width: "50%",
-    height: "100%",
-  },
-  one: {
-    height: "40%",
-    width: "100%",
-  },
-  two: {
-    height: "60%",
-    width: "100%",
+    backgroundColor: "black",
     "& div": {
       objectFit: "cover",
       width: "100%",
       height: "100%",
-      '& img' :{
+      "& img": {
         // border: "0.2em solid white",
-      }
+      },
     },
   },
 });
@@ -110,61 +91,39 @@ function Carousel(props) {
     easing: "ease",
     canSwipe: false,
     cssClass: ".one",
+    // indicators: (i) => <div className="indicator">{i + 1}</div>,
   };
 
   return (
-    <div className={classes.Carousel} id="2">
+    <div className={classes.Carousel} id="2s">
       <div className={classes.all}>
-        <div className={classes.mainLeft}>
-          <div className={classes.leftBigImg}>
+        <div className={classes.half}>
+          <div className={classes.one}>
             <Slide ref={slideRef} {...properties}>
               {slideImages.map((each, index) => (
-                <img
-                  src={each}
-                  key={index}
-                  style={{ maxHeight: "600px", minHeight: "660px" }}
-                />
+                <img src={each} key={index} />
               ))}
             </Slide>
           </div>
-          <div className={classes.leftSmallImg}>
-            <div className={classes.leftSmallImg1}>
-              <img src={imagesUrl[2]} />
-            </div>
-            <div className={classes.leftSmallImg2}>
-              <img src={imagesUrl[2]} />
-            </div>
+          <div className={classes.two}>
+            <img src={imagesUrl[1]} />
           </div>
         </div>
-        <div className={classes.mainRight}>
-          <div className={classes.rightLeft}>
-            <div className={classes.one}>
-              <img src={imagesUrl[2]} />
-            </div>
-            <div className={classes.two}>
-              <Slide ref={slideRef} {...properties}>
-                {slideImages.map((each, index) => (
-                  <img key={index} src={each} />
-                ))}
-              </Slide>
-            </div>
+        <div className={classes.half}>
+          <div className={classes.two}>
+            <img src={imagesUrl[2]} />
           </div>
-          <div className={classes.rightLeft}>
-            <div className={classes.two}>
-              <Slide ref={slideRef} {...properties}>
-                {slideImages.map((each, index) => (
-                  <img src={each} key={index} />
-                ))}
-              </Slide>
-            </div>
-            <div className={classes.one}>
-              <img src={imagesUrl[2]} />
-            </div>
+          <div className={classes.one}>
+            <Slide ref={slideRef} {...properties}>
+              {slideImages.map((each, index) => (
+                <img src={each} key={index} />
+              ))}
+            </Slide>
           </div>
         </div>
       </div>
       <div>
-        <Scroll scrollTo={'3'} />
+        <Scroll scrollTo={"3"} />
       </div>
     </div>
   );

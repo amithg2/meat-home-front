@@ -6,6 +6,7 @@ import Expand from "react-expand-animated"; //see how to use it
 import Button from "@mui/material/Button";
 import { OpenResContext } from "./contexts/OpenResContext";
 import useToggle from "../hooks/useToggle";
+import sizes from "../styles/sizes";
 
 const styles = {
   reservation: {
@@ -25,11 +26,8 @@ const styles = {
     },
     "& button": {
       margin: " 0 0.3rem ",
+      
     },
-  },
-  editButtons: {
-    display: "flex",
-    marginRight: "75%",
   },
 };
 function ReservationOne(props) {
@@ -97,7 +95,7 @@ function ReservationOne(props) {
             </p>
             <p>
               <b> מספר פלאפון: </b>
-              {'0' + edited.phoneRes}
+              {"0" + edited.phoneRes}
             </p>
             <p>
               <b> מקום :</b>
@@ -115,14 +113,16 @@ function ReservationOne(props) {
               <b> {edited.isApproved ? "אושרה" : "לא אושרה"} </b>
             </p>
           </div>
+          <div dir='ltr'>
           <Button
             variant="contained"
             color="primary"
-            style={{ marginRight: "85%" }}
             onClick={() => isEditToggle()}
           >
             ערוך
           </Button>
+          </div>
+         
         </div>
       );
     }

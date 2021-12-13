@@ -40,6 +40,7 @@ const styles = {
 
 function Scroll(props) {
   const { classes, scrollTo } = props;
+
   return (
     <div
       style={{

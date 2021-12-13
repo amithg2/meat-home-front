@@ -6,28 +6,43 @@ import About from "./About";
 import Carousel from "./Carousel";
 import Reservation from "./Reservation";
 import axios from "axios";
+import sizes from "../styles/sizes";
+import SmallCarousel from "./SmallCarousel";
 const styles = {
   home: {
     margin: "0px",
     padding: "0px",
     width: "70%",
     margin: "auto",
+    [sizes.down("lg")]: {
+      width: "100%",
+    },
   },
   Carousel: {
-    // display: "none", //need to see how to cancel component on small size
-  },
+    [sizes.down("sm")]: {
+      display: "none",
+    },
+  }, SmallCarousel : {
+      display: 'none',
+    [sizes.down("sm")]: {
+        display: "block",
+      },
+  }
 };
 function Home(props) {
   useEffect(() => {
     axios.post("/counter");
   }, []);
-  const { photos, classes } = props;
+  const { classes } = props;
   return (
     <div className={classes.home}>
       <Main />
       <About />
       <div className={classes.Carousel}>
-        <Carousel photos={photos} />
+        <Carousel />
+      </div>
+      <div className={classes.SmallCarousel}>
+          <SmallCarousel />
       </div>
       <Reservation />
     </div>
