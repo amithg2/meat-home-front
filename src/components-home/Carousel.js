@@ -44,31 +44,28 @@ function Carousel(props) {
           <div className={classes.leftBigImg}>
             <Slide ref={slideRef} {...properties}>
               {slideImages.map((each, index) => (
-                <img
-                  src={each}
-                  key={index}
-                />
+                <img src={each} key={index}  alt='' />
               ))}
             </Slide>
           </div>
           <div className={classes.leftSmallImg}>
             <div className={classes.leftSmallImg1}>
-              <img src={imagesUrl[2]} />
+              <img src={imagesUrl[2]} alt=''/>
             </div>
             <div className={classes.leftSmallImg2}>
-              <img src={imagesUrl[2]} />
+              <img src={imagesUrl[2]}  alt=''/>
             </div>
           </div>
         </div>
         <div className={classes.mainRight}>
           <div className={classes.rightLeft}>
             <div className={classes.one}>
-              <img src={imagesUrl[2]} />
+              <img src={imagesUrl[2]}  alt=''/>
             </div>
             <div className={classes.two}>
               <Slide ref={slideRef} {...properties}>
                 {slideImages.map((each, index) => (
-                  <img key={index} src={each} />
+                  <img key={index} src={each}  alt='' />
                 ))}
               </Slide>
             </div>
@@ -77,12 +74,12 @@ function Carousel(props) {
             <div className={classes.two}>
               <Slide ref={slideRef} {...properties}>
                 {slideImages.map((each, index) => (
-                  <img src={each} key={index} />
+                  <img src={each} key={index}  alt='' />
                 ))}
               </Slide>
             </div>
             <div className={classes.one}>
-              <img src={imagesUrl[2]} />
+              <img src={imagesUrl[2]}  alt=''/>
             </div>
           </div>
         </div>

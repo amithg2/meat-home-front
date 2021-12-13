@@ -7,7 +7,7 @@ import axios from "axios";
 import AlertDialog from "./AlertDialog";
 import Button from "@mui/material/Button";
 import { withStyles } from "@material-ui/styles";
-import styles from './styles/FormEditStyles'
+import styles from "./styles/FormEditStyles";
 
 function FormEdit({
   originalReservation,
@@ -15,11 +15,11 @@ function FormEdit({
   setIsEdit,
   setIsDeleted,
   setEdited,
+  setData,
 }) {
   const [reservation, setReservation] = useState(originalReservation);
   const [isAlert, setIsAlert] = useState("");
   const [message, setMessage] = useState("");
-
   const handlerCancelDialog = () => {
     setIsAlert("");
     setMessage("");
@@ -42,19 +42,19 @@ function FormEdit({
 
   const handleSubmit = async () => {
     setEdited(reservation);
-    const { data } = await axios
-      .post("/reservation/edit", reservation, {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
-      })
-      .then(setIsEdit(false))
-      .catch((err) => err);
+    const { data } = await axios.post("/reservation/edit", reservation, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+    setData(data);
+    if (!data.success) setEdited(originalReservation);
+    setIsEdit(false);
   };
 
   const handleDelete = async () => {
     setIsEdit(false);
-    await axios.post(
+    const { data } = await axios.post(
       "/reservation/delete",
       {
         resId: reservation.resId,
@@ -65,7 +65,10 @@ function FormEdit({
         },
       }
     );
-    setIsDeleted(true);
+    
+    setData(data);
+    if (data.success) setIsDeleted();
+    setIsEdit();
   };
   return (
     <div>
@@ -79,7 +82,7 @@ function FormEdit({
           type={isAlert}
         />
       )}
-      <div className={classes.form}>
+      <div className={classes.formEdit}>
         <ValidatorForm onError={(errors) => console.log(errors)}>
           <TextValidator
             sx={{ width: "100%" }}
@@ -176,7 +179,7 @@ function FormEdit({
                 onClick={() =>
                   setReservation({
                     ...reservation,
-                    isApproved: !reservation.isApprovedEdit,
+                    isApproved: !reservation.isApproved,
                   })
                 }
               />
@@ -190,13 +193,11 @@ function FormEdit({
           variant="contained"
           color="error"
           onClick={() => alertHandler("delete")}
-          type="submit"
         >
           מחק
         </Button>
         <Button
           variant="contained"
-          type="submit"
           color="warning"
           onClick={() => alertHandler("cancel")}
         >

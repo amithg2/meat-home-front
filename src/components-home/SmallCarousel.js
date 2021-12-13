@@ -44,22 +44,22 @@ function SmallCarousel(props) {
           <div className={classes.one}>
             <Slide ref={slideRef} {...properties}>
               {slideImages.map((each, index) => (
-                <img src={each} key={index} />
+                <img src={each} key={index}  alt=''/>
               ))}
             </Slide>
           </div>
           <div className={classes.two}>
-            <img src={imagesUrl[1]} />
+            <img src={imagesUrl[1]} alt='' />
           </div>
         </div>
         <div className={classes.half}>
           <div className={classes.two}>
-            <img src={imagesUrl[2]} />
+            <img src={imagesUrl[2]}  alt=''/>
           </div>
           <div className={classes.one}>
             <Slide ref={slideRef} {...properties}>
               {slideImages.map((each, index) => (
-                <img src={each} key={index} />
+                <img src={each} key={index}  alt=''/>
               ))}
             </Slide>
           </div>

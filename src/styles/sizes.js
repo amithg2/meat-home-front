@@ -1,4 +1,4 @@
-export default {
+const makeSize = {
     down(size){
         const sizes = {
             xs: '575.98px',
@@ -10,3 +10,4 @@ export default {
     }
 
 }
+export default makeSize

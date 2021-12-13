@@ -29,7 +29,7 @@ function Mapbox(props) {
   return (
     <div className={classes.mapbox}>
       <Map
-        style="mapbox://styles/mapbox/streets-v9"
+        style={"mapbox://styles/mapbox/streets-v9"}
         containerStyle={{
           height: "100%",
           width: "100%",

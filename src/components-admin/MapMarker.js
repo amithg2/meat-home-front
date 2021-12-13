@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Marker } from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { withStyles } from "@material-ui/styles";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Link } from "react-scroll";
 import { OpenResContext } from "./contexts/OpenResContext";
 import useToggle from "../hooks/useToggle";
 import styles from "./styles/MapMarkerStyles";

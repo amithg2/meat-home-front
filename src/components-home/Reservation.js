@@ -11,9 +11,16 @@ import TextField from "@mui/material/TextField";
 import styles from "./styles/ReservatinStyles";
 
 function Reservation(props) {
+  const res = {
+    nameRes: "",
+    phoneRes: "",
+    placeRes: "",
+    dateRes: "",
+    numOfPeopleRes: "",
+  };
   const [resId, setResId] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [reservation, setReservation] = useState({});
+  const [reservation, setReservation] = useState(res);
 
   useEffect(() => {
     ValidatorForm.addValidationRule("isNumber", (value) => {
@@ -36,8 +43,10 @@ function Reservation(props) {
       phoneRes: reservation.phoneRes.replace("-", ""),
     };
     const { data } = await axios.post("/reservation/add", newRes);
-    await setResId(data.resId);
-    await setIsLoading(false);
+    if (data.success) {
+      await setResId(data.resId);
+      await setIsLoading(false);
+    }
   };
 
   const { classes } = props;
@@ -48,6 +57,7 @@ function Reservation(props) {
           <h4>תודה שהזמנתם! ממתין למספר הזמנה...</h4>
           <img
             style={{ height: "7rem" }}
+            alt=""
             src="https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"
           />
         </div>
@@ -146,6 +156,7 @@ function Reservation(props) {
                       labelId="numOfPeopleRes"
                       id="numOfPeopleRes"
                       value={reservation.numOfPeopleRes}
+                      defaultValue={0}
                       onChange={(e) => {
                         setReservation({
                           ...reservation,
@@ -154,7 +165,7 @@ function Reservation(props) {
                       }}
                       label="Age"
                     >
-                      <MenuItem sx={{ width: "100%" }} value="לא סגור">
+                      <MenuItem sx={{ width: "100%" }} value={0}>
                         <em>לא סגור</em>
                       </MenuItem>
                       <MenuItem sx={{ width: "100%" }} value={10}>
@@ -181,7 +192,11 @@ function Reservation(props) {
             </div>
           ) : (
             <div className={classes.reservationId}>
-              <h3>מספר הזמנה : {resId} </h3>
+              {resId ? (
+                <h3>מספר הזמנה : {resId} </h3>
+              ) : (
+                <h3>משהו השתבש, אנא נסו שוב מאוחר יותר</h3>
+              )}
               <h4> מספר פלאפון לבירורים : 0509999999</h4>
             </div>
           )}

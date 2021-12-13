@@ -2,7 +2,6 @@ import sizes from "../../styles/sizes";
 
 const styles = {
   home: {
-    margin: "0px",
     padding: "0px",
     width: "70%",
     margin: "auto",
