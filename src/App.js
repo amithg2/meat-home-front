@@ -1,7 +1,5 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
-import "./App.css";
 import Home from "./components-home/Home";
 import Admin from "./components-admin/Admin";
 import Login from "./components-admin/Login";

@@ -7,16 +7,7 @@ import axios from "axios";
 import AlertDialog from "./AlertDialog";
 import Button from "@mui/material/Button";
 import { withStyles } from "@material-ui/styles";
-import sizes from "../styles/sizes";
-
-const styles = {
-  form: {
-      width: '40%',
-    [sizes.down("md")]: {
-        width: "100%",
-      },
-  },
-};
+import styles from './styles/FormEditStyles'
 
 function FormEdit({
   originalReservation,
@@ -63,7 +54,7 @@ function FormEdit({
 
   const handleDelete = async () => {
     setIsEdit(false);
-    const { isDeleted } = await axios.post(
+    await axios.post(
       "/reservation/delete",
       {
         resId: reservation.resId,

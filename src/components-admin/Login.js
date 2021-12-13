@@ -2,36 +2,18 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
 import axios from "axios";
-const styles = {
-  loginForm: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    textAlign: "center",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    "& input": {
-      margin: "0.3rem",
-    },
-    "& button": {
-      margin: "0.3rem",
-    },
-  },
-};
+import styles from "./styles/LoginStyles";
+
 function Login({ classes }) {
   const [message, setMessage] = useState(false);
-const [isRedirect, setIsRedirect] = useState(false)
+  const [isRedirect, setIsRedirect] = useState(false);
   const loginHandler = async (e) => {
     e.preventDefault();
     const user = { username: e.target[0].value, password: e.target[1].value };
     const { data } = await axios.post("/login", user);
     if (data.isAuth) {
       await localStorage.setItem("token", data.token);
-    setIsRedirect(true)
-    
+      setIsRedirect(true);
     } else {
       setMessage(true);
     }
@@ -56,8 +38,7 @@ const [isRedirect, setIsRedirect] = useState(false)
         />
         <button type="submit">היכנס</button>
       </form>
-      {isRedirect && <Navigate to="/admin" />
-}
+      {isRedirect && <Navigate to="/admin" />}
     </div>
   );
 }

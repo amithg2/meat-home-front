@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import useToggle from "../hooks/useToggle";
+
 export default function AlertDialog({
   message,
   handleCancel,

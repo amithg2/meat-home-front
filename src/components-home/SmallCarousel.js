@@ -1,67 +1,11 @@
-import React, { useEffect, useState, createRef } from "react";
+import React, { createRef } from "react";
 import { withStyles } from "@material-ui/styles";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import Scroll from "./helpers/Scroll";
+import styles from "./styles/SmallCarouselStyles";
 
-const styles = (theme) => ({
-  Carousel: {
-    color: "red",
-    height: "100vh",
-    width: "100%",
-  },
-  all: {
-    height: "100%",
-    width: "100%",
-    display: "flex",
-    "& img": {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      outline: "2px solid #fff",
-      outlineOffset: "-2px",
-    },
-  },
-  mainLeft: {
-    width: "50%",
-    height: "100%",
-    backgroundColor: "red",
-  },
-  half: {
-    width: "50%",
-    height: "100%",
-    display: "flex",
-    backgroundColor: "green",
-    flexDirection: "column",
-  },
-
-  one: {
-    height: "50%",
-    width: "100%",
-    backgroundColor: "purple",
-    "& div": {
-      objectFit: "cover",
-      width: "100%",
-      height: "100%",
-    },
-  },
-
-  two: {
-    height: "50%",
-    width: "100%",
-    backgroundColor: "black",
-    "& div": {
-      objectFit: "cover",
-      width: "100%",
-      height: "100%",
-      "& img": {
-        // border: "0.2em solid white",
-      },
-    },
-  },
-});
-
-function Carousel(props) {
+function SmallCarousel(props) {
   //   const { classes, photos } = props;
   const { classes } = props;
 
@@ -91,7 +35,6 @@ function Carousel(props) {
     easing: "ease",
     canSwipe: false,
     cssClass: ".one",
-    // indicators: (i) => <div className="indicator">{i + 1}</div>,
   };
 
   return (
@@ -129,4 +72,4 @@ function Carousel(props) {
   );
 }
 
-export default withStyles(styles)(Carousel);
+export default withStyles(styles)(SmallCarousel);

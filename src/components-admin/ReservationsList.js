@@ -1,29 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/styles";
 import ReservationOne from "./ReservationOne";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-
-const styles = {
-  reservetions: {
-    width: "100%",
-    minHeight: "50vh",
-  },
-  allReservations: {
-    width: "100%",
-    display: "flex",
-    alighContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    flexWrap: "wrap",
-    marginTop: "1em",
-  },
-};
+import styles from "./styles/ReservationsListStyles";
 
 function ReservationsList(props) {
   const [sortBy, setSortBy] = useState("closer");
-  
 
   const { classes, reservations } = props;
 
@@ -34,11 +18,7 @@ function ReservationsList(props) {
 
       const newArr = arr.map((e, index) => {
         return (
-          <ReservationOne
-            reservation={e}
-            key={index}
-            id={e.resId.toString()}
-          />
+          <ReservationOne reservation={e} key={index} id={e.resId.toString()} />
         );
       });
       if (sortBy === "closer") return newArr;

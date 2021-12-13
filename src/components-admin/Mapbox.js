@@ -1,28 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
-import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
+import ReactMapboxGl from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import MapMarker from "./MapMarker";
 import { withStyles } from "@material-ui/styles";
-const styles = {
-  mapbox: {
-    backgroundColor: "lightgreen",
-    width: "100%",
-    height: "40vh",
-    "& a": {
-      userSelect: "none",
-
-      color: "white",
-    },
-    "& button": {
-      display: "none",
-      userSelect: "none",
-    },
-  },
-  map: {
-    width: "100%",
-    height: "100%",
-  },
-};
+import styles from './styles/MapboxStyles'
 
 function Mapbox(props) {
   const Map = ReactMapboxGl({

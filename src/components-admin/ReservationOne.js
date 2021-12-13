@@ -1,35 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { withStyles } from "@material-ui/styles";
 import FormEdit from "./FormEdit";
 import SmallReservation from "./SmallReservation";
-import Expand from "react-expand-animated"; //see how to use it
+// import Expand from "react-expand-animated"; //see how to use it
 import Button from "@mui/material/Button";
 import { OpenResContext } from "./contexts/OpenResContext";
 import useToggle from "../hooks/useToggle";
-import sizes from "../styles/sizes";
+import styles from "./styles/ReservationOneStyles";
 
-const styles = {
-  reservation: {
-    boxShadow:
-      "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
-
-    width: "85%",
-    backgroundColor: "lightgrey",
-    padding: "1em",
-    cursor: "pointer",
-    margin: "0.5em 0",
-    "& h2": {
-      textAlign: "center",
-    },
-    "& p": {
-      marginRight: "1em",
-    },
-    "& button": {
-      margin: " 0 0.3rem ",
-      
-    },
-  },
-};
 function ReservationOne(props) {
   const { reservation, classes } = props;
   const { openedRes } = useContext(OpenResContext);
@@ -113,16 +91,15 @@ function ReservationOne(props) {
               <b> {edited.isApproved ? "אושרה" : "לא אושרה"} </b>
             </p>
           </div>
-          <div dir='ltr'>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => isEditToggle()}
-          >
-            ערוך
-          </Button>
+          <div dir="ltr">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => isEditToggle()}
+            >
+              ערוך
+            </Button>
           </div>
-         
         </div>
       );
     }

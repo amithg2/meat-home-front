@@ -1,84 +1,9 @@
-import React, { useEffect, useState, createRef } from "react";
+import React, { createRef } from "react";
 import { withStyles } from "@material-ui/styles";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import Scroll from "./helpers/Scroll";
-
-const styles = (theme) => ({
-  Carousel: {
-    color: "red",
-    height: "100vh",
-    width: "100%",
-  },
-  all: {
-    height: "100%",
-    width: "100%",
-    display: "flex",
-    "& img": {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      outline: '4px solid #fff',
-      outlineOffset: '-4px',
-    },
-  },
-  mainLeft: {
-    width: "45%",
-    height: "100%",
-  },
-  mainRight: {
-    width: "55%",
-    height: "100%",
-    display: "flex",
-  },
-  leftBigImg: {
-    height: "50%",
-    width: "100%",
-    "& div": {
-      objectFit: "cover",
-      width: "100%",
-      height: "100%",
-    },
-  },
-  leftSmallImg: {
-    height: "50%",
-    width: "100%",
-    display: "flex",
-  },
-  leftSmallImg1: {
-    minHeight: "100%",
-    width: "50%",
-  },
-  leftSmallImg2: {
-    height: "100%",
-    width: "50%",
-  },
-
-  rightRight: {
-    width: "50%",
-    height: "100%",
-  },
-  rightLeft: {
-    width: "50%",
-    height: "100%",
-  },
-  one: {
-    height: "40%",
-    width: "100%",
-  },
-  two: {
-    height: "60%",
-    width: "100%",
-    "& div": {
-      objectFit: "cover",
-      width: "100%",
-      height: "100%",
-      '& img' :{
-        // border: "0.2em solid white",
-      }
-    },
-  },
-});
+import styles from "./styles/CarouselStyles";
 
 function Carousel(props) {
   //   const { classes, photos } = props;
@@ -122,7 +47,6 @@ function Carousel(props) {
                 <img
                   src={each}
                   key={index}
-                  style={{ maxHeight: "600px", minHeight: "660px" }}
                 />
               ))}
             </Slide>
@@ -164,7 +88,7 @@ function Carousel(props) {
         </div>
       </div>
       <div>
-        <Scroll scrollTo={'3'} />
+        <Scroll scrollTo={"3"} />
       </div>
     </div>
   );
