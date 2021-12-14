@@ -1,3 +1,5 @@
+import sizes from "../../styles/sizes";
+
 const styles = {
   main: {
     width: "100%",
@@ -6,6 +8,9 @@ const styles = {
     margin: "0.3em 0",
     cursor: "pointer",
     boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px",
+    [sizes.down("xs")]: {
+        fontSize : '0.8em',
+      }, 
   },
   approved: {
     background: "rgba(107, 219, 111,0.4)",

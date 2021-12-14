@@ -10,7 +10,7 @@ import styles from "./styles/HomeStyles";
 
 function Home(props) {
   useEffect(() => {
-    axios.post("/counter");
+    axios.post("/guest/counter");
   }, []);
   const { classes } = props;
   return (

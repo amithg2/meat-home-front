@@ -65,7 +65,7 @@ function FormEdit({
         },
       }
     );
-    
+
     setData(data);
     if (data.success) setIsDeleted();
     setIsEdit();
@@ -83,7 +83,10 @@ function FormEdit({
         />
       )}
       <div className={classes.formEdit}>
-        <ValidatorForm onError={(errors) => console.log(errors)}>
+        <ValidatorForm
+          onError={(errors) => console.log(errors)}
+          onSubmit={(e) => e}
+        >
           <TextValidator
             sx={{ width: "100%" }}
             id="name"
@@ -94,7 +97,7 @@ function FormEdit({
             onChange={(e) =>
               setReservation({ ...reservation, nameRes: e.target.value })
             }
-            value={reservation.nameRes}
+            value={reservation.nameRes || undefined}
             validators={["required"]}
             errorMessages={["חובה לכתוב שם"]}
           />
@@ -105,7 +108,7 @@ function FormEdit({
             margin="normal"
             type="date"
             format="dd/MM/yyyy"
-            defaultValue={reservation.dateRes}
+            value={reservation.dateRes || undefined}
             onChange={(e) =>
               setReservation({ ...reservation, dateRes: e.target.value })
             }
@@ -125,7 +128,7 @@ function FormEdit({
             onChange={(e) =>
               setReservation({ ...reservation, phoneRes: e.target.value })
             }
-            value={reservation.phoneRes}
+            value={reservation.phoneRes || undefined}
             validators={["required"]}
             errorMessages={["חובה לכתוב מספר פלאפון"]}
           />
@@ -140,7 +143,7 @@ function FormEdit({
             onChange={(e) =>
               setReservation({ ...reservation, fullAdress: e.target.value })
             }
-            value={reservation.fullAdress}
+            value={reservation.fullAdress || undefined}
           />
           <TextValidator
             sx={{ width: "100%" }}
@@ -152,7 +155,7 @@ function FormEdit({
             onChange={(e) =>
               setReservation({ ...reservation, placeRes: e.target.value })
             }
-            value={reservation.placeRes}
+            value={reservation.placeRes || undefined}
             validators={["required"]}
             errorMessages={["חובה לכתוב מיקום"]}
           />
@@ -168,14 +171,14 @@ function FormEdit({
             onChange={(e) =>
               setReservation({ ...reservation, numOfPeopleRes: e.target.value })
             }
-            value={reservation.numOfPeopleRes}
+            value={reservation.numOfPeopleRes || undefined}
             validators={["required"]}
             errorMessages={["חובה לכתוב מספר אנשים"]}
           />
           <FormControlLabel
             control={
               <Checkbox
-                defaultChecked={reservation.isApproved}
+                checked={reservation.isApproved}
                 onClick={() =>
                   setReservation({
                     ...reservation,
