@@ -15,6 +15,7 @@ function Home(props) {
   const { classes } = props;
   return (
     <div className={classes.home}>
+      <a style={{position: 'absolute', zIndex: '40', left: '0'}} href='/login'>Login</a>
       <Main />
       <About />
       <div className={classes.Carousel}>

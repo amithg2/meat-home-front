@@ -33,7 +33,6 @@ const styles = {
     transition: " all ease-in-out .5s",
     position: "absolute",
     filter: "drop-shadow(9px 19px 9px rgba(255,255,255,0.48))",
-
     "& span": {
       color: "#E71A1A",
       transition: "ease-in-out .5s",
