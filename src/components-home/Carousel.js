@@ -10,7 +10,6 @@ function Carousel(props) {
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get("https://meat-home-server.herokuapp.com/guest/images");
-      console.log(data)
       if (data.data) {
         const urlarr = data.data.map((e) => {
           return e.full_picture;
