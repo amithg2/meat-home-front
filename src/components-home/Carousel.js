@@ -69,7 +69,7 @@ function Carousel(props) {
       </div>
     );
   } else {
-    return null;
+    return <p>sssssssssssssssssssssssssssss</p>;
   }
 }
 export default withStyles(styles)(Carousel);
