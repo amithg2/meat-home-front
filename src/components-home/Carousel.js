@@ -10,6 +10,7 @@ function Carousel(props) {
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get("https://meat-home-server.herokuapp.com/guest/images");
+      console.log(data)
       if (data.data) {
         const urlarr = data.data.map((e) => {
           return e.full_picture;
@@ -26,6 +27,7 @@ function Carousel(props) {
 
   if (imagesUrl) {
     return (
+
       <div className={classes.Carousel} id="2">
         <div className={classes.all}>
           <div className={classes.mainLeft}>
@@ -61,6 +63,7 @@ function Carousel(props) {
           </div>
         </div>
         <div>
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
           <Scroll scrollTo={"3"} />
         </div>
       </div>
