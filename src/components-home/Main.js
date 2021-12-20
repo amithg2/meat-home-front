@@ -7,7 +7,7 @@ const Main = ({ classes }) => {
     <div className={classes.container}>
       <div className={classes.background}>
         <h1 className={classes.name}>
-          Me<span>asst</span> Home
+          Me<span>at</span> Home
         </h1>
         <Scroll scrollTo={"1"} />
       </div>

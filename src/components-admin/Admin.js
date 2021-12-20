@@ -17,7 +17,7 @@ function Admin(props) {
   const [isAuth, setIsAuth] = useState(true);
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get("/admin", {
+      const { data } = await axios.get("https://meat-home-server.herokuapp.com/admin", {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },

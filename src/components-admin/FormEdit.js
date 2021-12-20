@@ -42,7 +42,7 @@ function FormEdit({
 
   const handleSubmit = async () => {
     setEdited(reservation);
-    const { data } = await axios.post("/reservation/edit", reservation, {
+    const { data } = await axios.post("https://meat-home-server.herokuapp.com/reservation/edit", reservation, {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -55,7 +55,7 @@ function FormEdit({
   const handleDelete = async () => {
     setIsEdit(false);
     const { data } = await axios.post(
-      "/reservation/delete",
+      "https://meat-home-server.herokuapp.com/reservation/delete",
       {
         resId: reservation.resId,
       },

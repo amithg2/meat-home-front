@@ -42,7 +42,7 @@ function Reservation(props) {
       ...reservation,
       phoneRes: reservation.phoneRes.replace("-", ""),
     };
-    const { data } = await axios.post("/reservation/add", newRes);
+    const { data } = await axios.post("https://meat-home-server.herokuapp.com/reservation/add", newRes);
     if (data.success) {
       await setResId(data.resId);
       await setIsLoading(false);

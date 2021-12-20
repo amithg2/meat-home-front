@@ -10,7 +10,7 @@ function Login({ classes }) {
   const loginHandler = async (e) => {
     e.preventDefault();
     const user = { username: e.target[0].value, password: e.target[1].value };
-    const { data } = await axios.post("/login", user);
+    const { data } = await axios.post("https://meat-home-server.herokuapp.com/login", user);
     if (data.isAuth) {
       await localStorage.setItem("token", data.token);
       setIsRedirect(true);

@@ -9,7 +9,7 @@ function SmallCarousel(props) {
     const [imagesUrl, setImagesUrl] = useState();
     useEffect(() => {
       const getData = async () => {
-        const { data } = await axios.get("/guest/images");
+        const { data } = await axios.get("https://meat-home-server.herokuapp.com/guest/images");
         if (data.data) {
           const urlarr = data.data.map((e) => {
             return e.full_picture;

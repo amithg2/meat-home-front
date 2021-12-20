@@ -4,6 +4,12 @@ import MapMarker from "./MapMarker";
 import { withStyles } from "@material-ui/styles";
 import styles from './styles/MapboxStyles'
 
+import 'mapbox-gl/dist/mapbox-gl.css';
+// import mapboxgl from 'mapbox-gl';
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+ReactMapboxGl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 function Mapbox(props) {
   const Map = ReactMapboxGl({
     accessToken:
@@ -28,6 +34,7 @@ function Mapbox(props) {
   };
   return (
     <div className={classes.mapbox}>
+        
       <Map
         style={"mapbox://styles/mapbox/streets-v9"}
         containerStyle={{

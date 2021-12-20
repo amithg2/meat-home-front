@@ -62,13 +62,13 @@ function Carousel(props) {
           </div>
         </div>
         <div>
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            
           <Scroll scrollTo={"3"} />
         </div>
       </div>
     );
   } else {
-    return <p>sssssssssssssssssssssssssssss</p>;
+    return <p></p>;
   }
 }
 export default withStyles(styles)(Carousel);

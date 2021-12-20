@@ -10,7 +10,7 @@ import styles from "./styles/HomeStyles";
 
 function Home(props) {
   useEffect(() => {
-    axios.post("/guest/counter");
+    axios.post("https://meat-home-server.herokuapp.com/guest/counter");
   }, []);
   const { classes } = props;
   return (
